@@ -29,7 +29,7 @@ jobs:
         with:
           push: true
           tags: ghcr.io/greedhub/utn-ads-2021-frontend:latest
-          path: ./frontend
+          context: ./frontend
       -
         name: Image digest
         run: echo ${{ steps.docker_build.outputs.digest }}

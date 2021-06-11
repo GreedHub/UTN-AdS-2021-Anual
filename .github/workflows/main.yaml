@@ -41,6 +41,4 @@ jobs:
         id: install
       - 
         name: 'Deploy'
-        run: cd ./frontend/helm-chart && helm upgrade -i --force ads-frontend -f values.yaml ./
-        env: 
-          KUBECONFIG: '${{ secrets.KUBECONFIG }}'
+        run: echo ${{ secrets.KUBECONFIG }} | base64 -d > $HOME/.kube/config && cd ./frontend/helm-chart && helm install ads-frontend -f values.yaml ./

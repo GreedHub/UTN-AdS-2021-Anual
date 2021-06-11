@@ -17,7 +17,7 @@ spec:
         timestamp: "{{ .Values.timestamp }}"
     spec:
       imagePullSecrets:
-      - name: regcred
+      - name: github-registry
       containers:
       - name: {{ .Values.name}}
         image: {{ .Values.image.name}}

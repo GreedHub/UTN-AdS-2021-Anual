@@ -107,4 +107,3 @@ spec:
   tls:
     certResolver: default
     options: {}
-    

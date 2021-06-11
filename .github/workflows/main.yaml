@@ -47,10 +47,6 @@ jobs:
           context: ./frontend/helm-chart
           values: |
             name: foobar
-          value-files: >-
-          [
-            "values.yaml", 
-            "values.production.yaml"
-          ]
+          value-files: "values.yaml"
         env:
           KUBECONFIG_FILE: '${{ secrets.KUBECONFIG }}'

@@ -9,7 +9,7 @@ exposedPort: "80"
 host: "distanciavirtual.com.ar"
 image:
   name: "ghcr.io/greedhub/utn-ads-2021-frontend:latest"
-  repository: "nodejs-app"
+  pullSecret: github-registry-greedhub
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
   tag: ""

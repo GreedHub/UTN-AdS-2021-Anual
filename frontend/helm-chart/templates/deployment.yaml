@@ -17,7 +17,7 @@ spec:
         timestamp: "{{ .Values.timestamp }}"
     spec:
       imagePullSecrets:
-      - name: github-registry
+      - name: {{ .Values.image.pullSecret}}
       containers:
       - name: {{ .Values.name}}
         image: {{ .Values.image.name}}
@@ -40,11 +40,11 @@ spec:
           periodSeconds: 30
         resources:
           requests:
-            memory: {{ .Values.resources.request.memory}}
-            cpu: {{ .Values.resources.request.cpu}}
+            memory: "32Mi"
+            cpu: "250m"
           limits:
-            memory: {{ .Values.resources.limits.memory}}
-            cpu: {{ .Values.resources.limits.cpu}}
+            memory: "256Mi"
+            cpu: "1"
         env:
         - name: "APP_NAME"
           value: {{ .Values.name}}
@@ -53,9 +53,7 @@ spec:
             fieldRef:
               fieldPath: spec.nodeName
         ports:
-        - name: {{ .Values.name}}
-          containerPort: {{ .Values.exposedPort}}
-        - name: {{ .Values.name}}
+        - name: {{ .Values.name}}-d
           containerPort: {{ .Values.exposedPort}}
           
 ---
@@ -82,11 +80,7 @@ spec:
     app: {{ .Values.name}}
   ports:
   - protocol: TCP
-    name: {{ .Values.name}}
-    port: {{ .Values.exposedPort}}
-    targetPort: {{ .Values.exposedPort}}
-  - protocol: TCP
-    name: {{ .Values.name}}
+    name: {{ .Values.name}}-s
     port: {{ .Values.exposedPort}}
     targetPort: {{ .Values.exposedPort}}
 ---

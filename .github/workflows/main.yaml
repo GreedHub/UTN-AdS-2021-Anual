@@ -43,4 +43,4 @@ jobs:
         name: 'Deploy'
         run: cd ./frontend/helm-chart && helm upgrade -i --force ads-frontend -f values.yaml ./
         env: 
-          KUBECONFIG_FILE: '${{ secrets.KUBECONFIG }}'
+          KUBECONFIG: '${{ secrets.KUBECONFIG }}'

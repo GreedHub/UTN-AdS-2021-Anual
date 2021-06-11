@@ -37,16 +37,12 @@ jobs:
         name: Image digest
         run: echo ${{ steps.docker_build.outputs.digest }}
       - 
-        name: 'Deploy'
-        uses: 'deliverybot/helm@v1'
+        uses: azure/setup-helm@v1
         with:
-          release: 'utn-ads-2021-frontend'
-          namespace: 'default'
-          chart: 'app'
-          token: '${{ github.token }}'
-          context: ./frontend/helm-chart
-          values: |
-            name: foobar
-          value-files: "values.yaml"
-        env:
+          version: '<version>' # default is latest stable
+        id: install
+      - 
+        name: 'Deploy'
+        run: cd ./frontend/helm-chart && helm upgrade -i --force ads-frontend -f values.yaml ./
+        env: 
           KUBECONFIG_FILE: '${{ secrets.KUBECONFIG }}'

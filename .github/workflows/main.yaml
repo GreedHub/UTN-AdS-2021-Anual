@@ -38,8 +38,6 @@ jobs:
         run: echo ${{ steps.docker_build.outputs.digest }}
       - 
         uses: azure/setup-helm@v1
-        with:
-          version: '<version>' # default is latest stable
         id: install
       - 
         name: 'Deploy'

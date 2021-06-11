@@ -41,4 +41,4 @@ jobs:
         id: install
       - 
         name: 'Deploy'
-        run: echo ${{ secrets.KUBECONFIG }} | base64 -d > $HOME/.kube/config && cd ./frontend/helm-chart && helm install ads-frontend -f values.yaml ./
+        run: mkdir -p $HOME/.kube && echo ${{ secrets.KUBECONFIG }} | base64 -d > $HOME/.kube/config && cd ./frontend/helm-chart && helm install ads-frontend -f values.yaml ./

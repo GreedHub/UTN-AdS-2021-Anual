@@ -29,6 +29,8 @@ jobs:
         name: Install Helm
         uses: azure/setup-helm@v1
         id: install
+        with:
+          version: 3.1.3
       - 
         name: 'Apply Kubeconfig'
         run: mkdir -p $HOME/.kube && echo ${{ secrets.KUBECONFIG }} | base64 -d > $HOME/.kube/config 

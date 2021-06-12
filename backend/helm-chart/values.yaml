@@ -4,7 +4,7 @@
 
 replicaCount: 1
 
-name: "utn-ads-2021-b"
+name: "utn-ads-tpi-b"
 exposedPort: "5000"
 host: "api.distanciavirtual.com.ar"
 image:

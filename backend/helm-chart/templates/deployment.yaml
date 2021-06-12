@@ -32,6 +32,10 @@ spec:
         env:
         - name: "APP_NAME"
           value: {{ .Values.name}}
+        - name: "PORT"
+          value: {{ .Values.exposedPort}}
+        - name: "CORS_ENABLED_SITES"
+          value: {{ .Values.corsEnabledSites}}
         - name: NODE_NAME
           valueFrom:
             fieldRef:

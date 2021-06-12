@@ -33,7 +33,7 @@ spec:
         - name: "APP_NAME"
           value: {{ .Values.name}}
         - name: "PORT"
-          value: {{ .Values.exposedPort}}
+          value: {{ .Values.exposedPort | quote}}
         - name: "CORS_ENABLED_SITES"
           value: {{ .Values.corsEnabledSites}}
         - name: NODE_NAME

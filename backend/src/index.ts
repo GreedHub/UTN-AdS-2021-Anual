@@ -4,7 +4,7 @@ const bodyParser = require( 'body-parser');
 const helmet = require( 'helmet');
 const cors = require( 'cors');
 
-import { LoginRouter } from './routes';
+import { LoginRouter, HealthRouter } from './routes';
 
 const originsEnv:string = process.env.CORS_ENABLED_ORIGINS || '';
 const origins:string[] = originsEnv.split(",") || [];
@@ -18,5 +18,6 @@ app.use(cors({
     credentials: true,
   }));
 app.use(LoginRouter);
+app.use(HealthRouter);
 
 if(process.env.PORT) app.listen(process.env.PORT);

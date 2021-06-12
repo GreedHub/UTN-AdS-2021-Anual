@@ -22,6 +22,22 @@ spec:
       - name: {{ .Values.name}}
         image: {{ .Values.image.name}}
         imagePullPolicy: Always
+        livenessProbe:
+          httpGet:
+            path: /
+            port: {{ .Values.exposedPort}}
+            scheme: HTTP
+          initialDelaySeconds: 10
+          timeoutSeconds: 20
+          periodSeconds: 30
+        readinessProbe:
+          httpGet:
+            path: /
+            port: {{ .Values.exposedPort}}
+            scheme: HTTP
+          initialDelaySeconds: 10
+          timeoutSeconds: 20
+          periodSeconds: 30
         resources:
           requests:
             memory: "32Mi"

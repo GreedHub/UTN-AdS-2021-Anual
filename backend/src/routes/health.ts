@@ -4,7 +4,7 @@ const healthRoutes = Router();
 
 healthRoutes
     .route('/health')
-        .post(async (req,res)=>{
+        .get(async (req,res)=>{
 
             res.send();
         })

@@ -1,5 +1,5 @@
 require('dotenv').config({ path: './.env' })
-const express = require( 'express');
+import * as express from 'express';
 const bodyParser = require( 'body-parser');
 const helmet = require( 'helmet');
 const cors = require( 'cors');

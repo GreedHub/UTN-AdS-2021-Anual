@@ -106,4 +106,13 @@ jobs:
         run: mkdir -p $HOME/.kube && echo ${{ secrets.KUBECONFIG }} | base64 -d > $HOME/.kube/config 
       -
         name: 'Deploy with Helm'
-        run: cd ./backend/helm-chart && helm upgrade -i --force utn-ads-2021-backend -f values.yaml --set-string timestamp=$TIMESTAMP ./
+        run: |
+            cd ./backend/helm-chart && \
+            helm upgrade -i --force utn-ads-2021-backend -f values.yaml \
+            --set-string mqtt.username=${{ secrets.MQTT_USER }} \
+            --set-string mqtt.password=${{ secrets.MQTT_PASS }} \
+            --set-string mqtt.caCert=${{ secrets.MQTT_CA }} \
+            --set-string mqtt.clientCert=${{ secrets.MQTT_CLIENT_CERT }} \
+            --set-string mqtt.clientKey=${{ secrets.MQTT_CLIENT_KEY }} \
+            --set-string timestamp=$TIMESTAMP \
+            ./

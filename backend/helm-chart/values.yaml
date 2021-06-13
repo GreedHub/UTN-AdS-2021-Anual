@@ -8,6 +8,13 @@ name: "utn-ads-tpi-b"
 exposedPort: "5000"
 host: "api.distanciavirtual.com.ar"
 corsEnabledSites: "distanciavirtual.com.ar"
+mqtt:
+  username: ""
+  password: ""
+  caCert: ""
+  clientCert: ""
+  clientKey: ""
+   
 image:
   name: "ghcr.io/greedhub/utn-ads-2021-backend:latest"
   pullSecret: github-registry-greedhub

@@ -7,18 +7,61 @@ const key = Buffer.from(MQTT_CLIENT_KEY, 'base64');
 
 var client  = mqtt.connect('mqtt://broker.distanciavirtual.com.ar',{protocol:'mqtts',username:MQTT_USER,password:MQTT_PASS,ca,cert,key});
  
-client.on('connect', function () {
-  client.subscribe('presence', function (err) {
-    if (!err) {
-      client.publish('presence', 'Hello mqtt')
-    }
-  })
+client.on('connect',() => {
+  client.subscribe("distanciaVirtual/#")
 })
  
 client.on('message', function (topic, message) {
-  // message is Buffer
-  console.log(message.toString())
-  client.end()
+
+  message = JSON.parse(message.toString());
+
+  console.log({message,topic})
 })
 
-export default client;
+const MQTTController = {
+  sendMessage,
+  subscribe,
+}
+
+function sendMessage(topic:string,message:string){
+  return new Promise((resolve,reject)=>{
+    
+    if(!isConnected()) {
+      reject("MQTT Client not connected");
+      return;
+    }
+
+
+    client.publish(topic,message);  
+    resolve("Message sent successfully");
+
+  })
+}
+
+function subscribe(topic:string){
+  return new Promise((resolve,reject)=>{
+    
+    if(!isConnected()) {
+      reject("MQTT Client not connected");
+      return;
+    }
+
+    client.subscribe(topic,err=>{
+      if(err) reject(err);
+    });  
+
+    resolve("Successfully subscribed");
+
+  })
+}
+
+function isConnected(){
+
+  if(!client.connected){
+    client.reconnect();
+  } 
+
+  return client.connected;
+}
+
+export default MQTTController;

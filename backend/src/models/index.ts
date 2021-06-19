@@ -1,2 +1,4 @@
-export { default as DeviceModel } from './device';
-export { default as ReadingModel } from './reading';
+import deviceModel from './device';
+import readingModel from './reading';
+
+export default {  deviceModel, readingModel };

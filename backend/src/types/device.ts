@@ -2,9 +2,10 @@ import { gql } from 'apollo-server-express';
 
 export default gql`
   type Device {
-    id: ID!
+    _id: ID!
+    id: String!
     name: String!
-    readings: [Reading!]!
+    readings: [Reading]
   }
 
   extend type Query {
@@ -13,6 +14,7 @@ export default gql`
   }
 
   extend type Mutation {
-    createDevice(id: ID!, name: String!): Device!
+    createDevice(id: String!, name: String!): Device!
   }
+
 `;

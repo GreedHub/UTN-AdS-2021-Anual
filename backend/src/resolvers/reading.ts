@@ -2,14 +2,14 @@ import { AuthenticationError } from 'apollo-server-express';
 
 export default {
   Query: {
-    device: async (parent, { id }, { models: { postModel }, me }, info) => {
+    reading: async (parent, { id }, { models: { postModel }, me }, info) => {
       if (!me) {
         throw new AuthenticationError('You are not authenticated');
       }
       const post = await postModel.findById({ _id: id }).exec();
       return post;
     },
-    devices: async (parent, args, { models: { postModel }, me }, info) => {
+    readings: async (parent, args, { models: { postModel }, me }, info) => {
       if (!me) {
         throw new AuthenticationError('You are not authenticated');
       }
@@ -26,7 +26,7 @@ export default {
       return post;
     },
   },
-  Post: {
+  Reading: {
     author: async ({ author }, args, { models: { userModel } }, info) => {
       const user = await userModel.findById({ _id: author }).exec();
       return user;

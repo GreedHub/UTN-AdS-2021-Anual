@@ -11,7 +11,7 @@ import { MongoDBDriver } from './drivers';
 
 import typeDefs from './types';
 import resolvers from './resolvers';
-import { DeviceModel, ReadingModel } from './models';
+import models from './models';
 import { LoginRouter, HealthRouter } from './routes';
 
 const originsEnv:string = process.env.CORS_ENABLED_ORIGINS || '';
@@ -27,7 +27,7 @@ async function startServer(){
     console.log('Connected to MongoDB');
   })
  
-  const mongodb = await mongoose.createConnection(MONGO_URL, {
+  await mongoose.connect(MONGO_URL, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
     useFindAndModify: false,
@@ -46,7 +46,14 @@ async function startServer(){
   app.use(LoginRouter);
   app.use(HealthRouter);
 
-  const server = new ApolloServer({schema:DeviceSchema,context: {models:{DeviceModel,ReadingModel}}});
+  const server = new ApolloServer({  
+    typeDefs,
+    resolvers,
+    context: {
+      models
+    }
+  });
+  
   server.applyMiddleware({app});
 
   if(PORT) app.listen(PORT,()=>console.log(`App started on port ${PORT}`));

@@ -1,35 +1,27 @@
 import { AuthenticationError } from 'apollo-server-express';
+import * as mongoose from 'mongoose';
 
 export default {
   Query: {
-    device: async (parent, { id }, { models: { postModel }, me }, info) => {
-      if (!me) {
-        throw new AuthenticationError('You are not authenticated');
-      }
-      const post = await postModel.findById({ _id: id }).exec();
-      return post;
+    device: async (parent, { id }, { models: { deviceModel } }, info) => {
+      const device = await deviceModel.find({ id: id }).exec();
+      return device[0];
     },
-    devices: async (parent, args, { models: { postModel }, me }, info) => {
-      if (!me) {
-        throw new AuthenticationError('You are not authenticated');
-      }
-      const posts = await postModel.find({ author: me.id }).exec();
-      return posts;
+    devices: async (parent, args, { models: { deviceModel } }, info) => {
+      const devices = await deviceModel.find().exec();
+      return devices;
     },
   },
   Mutation: {
-    createDevice: async (parent, { title, content }, { models: { postModel }, me }, info) => {
-      if (!me) {
-        throw new AuthenticationError('You are not authenticated');
-      }
-      const post = await postModel.create({ title, content, author: me.id });
+    createDevice: async (parent, { id, name }, { models: { deviceModel }}, info) => {
+      let oid = mongoose.Types.ObjectId;
+      const post = await deviceModel.create({id, name, _id:new oid()});
       return post;
     },
   },
-  Post: {
-    author: async ({ author }, args, { models: { userModel } }, info) => {
-      const user = await userModel.findById({ _id: author }).exec();
-      return user;
-    },
+  Device: {
+    id: (device) => device.id,
+    name: (device) => device.name,
+    readings: (device) => device.readings,
   },
 };

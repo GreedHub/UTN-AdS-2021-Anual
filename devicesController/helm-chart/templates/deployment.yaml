@@ -52,6 +52,16 @@ spec:
           value: {{ .Values.exposedPort | quote}}
         - name: "CORS_ENABLED_SITES"
           value: {{ .Values.corsEnabledSites}}
+        - name: "MQTT_USER"
+          value: {{ .Values.mqtt.username}}
+        - name: "MQTT_PASS"
+          value: {{ .Values.mqtt.password}}
+        - name: "MQTT_CA"
+          value: {{ .Values.mqtt.caCert}}
+        - name: "MQTT_CLIENT_CERT"
+          value: {{ .Values.mqtt.clientCert}}
+        - name: "MQTT_CLIENT_KEY"
+          value: {{ .Values.mqtt.clientKey}}
         - name: NODE_NAME
           valueFrom:
             fieldRef:
@@ -87,22 +97,3 @@ spec:
     name: {{ .Values.name}}-s
     port: {{ .Values.exposedPort}}
     targetPort: {{ .Values.exposedPort}}
----
-
-apiVersion: traefik.containo.us/v1alpha1
-kind: IngressRoute
-metadata:
-  name: {{ .Values.name}}
-  namespace: default
-spec:
-  entryPoints:
-    - websecure
-  routes:
-  - match: Host(`{{ .Values.host}}`) && PathPrefix(`/`)
-    kind: Rule
-    services:
-    - name: {{ .Values.name}}
-      port: {{ .Values.exposedPort}}
-  tls:
-    certResolver: default
-    options: {}

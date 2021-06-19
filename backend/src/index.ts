@@ -1,23 +1,56 @@
 require('dotenv').config({ path: './.env' })
-import * as express from 'express';
-const bodyParser = require( 'body-parser');
-const helmet = require( 'helmet');
-const cors = require( 'cors');
+import { ApolloServer } from "apollo-server-express";
 
+import * as express from 'express';
+import * as bodyParser from 'body-parser';
+import * as helmet from 'helmet';
+import * as cors from 'cors';
+import * as mongoose from 'mongoose';
+
+import { MongoDBDriver } from './drivers';
+
+import typeDefs from './types';
+import resolvers from './resolvers';
+import { DeviceModel, ReadingModel } from './models';
 import { LoginRouter, HealthRouter } from './routes';
 
 const originsEnv:string = process.env.CORS_ENABLED_ORIGINS || '';
 const origins:string[] = originsEnv.split(",") || [];
 
-const app = express();
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({extended: true}));
-app.use(helmet());
-app.use(cors({
-    origin: origins,
-    credentials: true,
-  }));
-app.use(LoginRouter);
-app.use(HealthRouter);
+const { PORT,MONGO_URL } = process.env;
 
-if(process.env.PORT) app.listen(process.env.PORT);
+
+
+async function startServer(){
+
+  mongoose.connection.once('open',()=>{
+    console.log('Connected to MongoDB');
+  })
+ 
+  const mongodb = await mongoose.createConnection(MONGO_URL, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+    useFindAndModify: false,
+    useCreateIndex: true
+  });
+
+
+  const app = express();
+  app.use(bodyParser.json());
+  app.use(bodyParser.urlencoded({extended: true}));
+  app.use(helmet());
+  app.use(cors({
+      origin: origins,
+      credentials: true,
+    }));
+  app.use(LoginRouter);
+  app.use(HealthRouter);
+
+  const server = new ApolloServer({schema:DeviceSchema,context: {models:{DeviceModel,ReadingModel}}});
+  server.applyMiddleware({app});
+
+  if(PORT) app.listen(PORT,()=>console.log(`App started on port ${PORT}`));
+}
+
+startServer();
+

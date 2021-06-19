@@ -1,0 +1,2 @@
+### GET Health
+GET http://localhost:5000/health

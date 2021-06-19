@@ -1,2 +1,47 @@
 ### GET Health
 GET http://localhost:5000/health
+
+### Get devices
+POST http://localhost:5000/graphql HTTP/1.1
+X-Request-Type: GraphQL
+Content-Type: application/json
+
+query{
+  devices{
+    id,
+    name,
+    readings{
+      timestamp,
+      value
+    }
+  }
+}
+
+### Get device by id
+POST http://localhost:5000/graphql HTTP/1.1
+X-Request-Type: GraphQL
+Content-Type: application/json
+
+query{
+  device(id:"2aseqwe"){
+    id,
+    name,
+    readings{
+      timestamp,
+      value
+    }
+  }
+}
+
+###Create device
+POST http://localhost:5000/graphql HTTP/1.1
+X-Request-Type: GraphQL
+Content-Type: application/json
+
+mutation{ 
+  createDevice(id:"2aseq3we",name:"testDevice"){
+    id,
+    name
+  }
+}
+  

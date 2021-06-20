@@ -1,6 +1,3 @@
-### GET Health
-GET http://localhost:5000/health
-
 ### Get devices
 POST http://localhost:5000/graphql HTTP/1.1
 X-Request-Type: GraphQL
@@ -12,7 +9,12 @@ query{
     name,
     readings{
       timestamp,
-      value
+      values{
+        name,
+        type,
+        value,
+        magnitude
+      }
     }
   }
 }
@@ -28,7 +30,12 @@ query{
     name,
     readings{
       timestamp,
-      value
+      values{
+        name,
+        type,
+        value,
+        magnitude
+      }
     }
   }
 }
@@ -44,4 +51,36 @@ mutation{
     name
   }
 }
-  
+
+###Register reading
+POST http://localhost:5000/graphql HTTP/1.1
+X-Request-Type: GraphQL
+Content-Type: application/json
+
+mutation{
+  createReading(
+    deviceId:"2aseq3we",
+    timestamp:123456,
+    values:[
+      {
+        name:"testTemp",
+        type:"temperature",
+        value:"20",
+        magnitude:"C"
+      },
+      {
+        name:"doorOpen",
+        type:"bool",
+        value:"false",
+      }
+    ]
+    ){
+      timestamp,
+      values{
+        name,
+        type,
+        value,
+        magnitude
+      }
+  }
+}

@@ -2,34 +2,21 @@ import { AuthenticationError } from 'apollo-server-express';
 
 export default {
   Query: {
-    reading: async (parent, { id }, { models: { postModel }, me }, info) => {
-      if (!me) {
-        throw new AuthenticationError('You are not authenticated');
-      }
-      const post = await postModel.findById({ _id: id }).exec();
-      return post;
-    },
-    readings: async (parent, args, { models: { postModel }, me }, info) => {
-      if (!me) {
-        throw new AuthenticationError('You are not authenticated');
-      }
-      const posts = await postModel.find({ author: me.id }).exec();
-      return posts;
+    readings: async (parent, {deviceId}, { models: { deviceModel } }, info) => {
+      const device = await deviceModel.find({ id: deviceId }).exec();
+      return device.readings;
     },
   },
   Mutation: {
-    createDevice: async (parent, { title, content }, { models: { postModel }, me }, info) => {
-      if (!me) {
-        throw new AuthenticationError('You are not authenticated');
-      }
-      const post = await postModel.create({ title, content, author: me.id });
-      return post;
+    createReading: async (parent, { deviceId, timestamp, values }, { models: { deviceModel } }, info) => {
+      const response = await deviceModel.findOneAndUpdate({id:deviceId},{ $push: {readings: {timestamp,values} }})
+      
+      return response.readings.find(reading=>reading.timestamp === timestamp);
     },
   },
   Reading: {
-    author: async ({ author }, args, { models: { userModel } }, info) => {
-      const user = await userModel.findById({ _id: author }).exec();
-      return user;
-    },
+    id:         reading=> reading._id,
+    timestamp:  reading => reading.timestamp,
+    values:     reading => reading.values,
   },
 };

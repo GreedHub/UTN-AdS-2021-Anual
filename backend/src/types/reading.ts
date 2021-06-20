@@ -2,9 +2,29 @@ import { gql } from 'apollo-server-express';
 
 export default gql`
   type Reading {
-    id: ID!
+    id:ID!
     timestamp: Int!
+    values: [ReadingValue!]!
+  }
+
+  type ReadingValue{
+    name: String!
+    type: String!
     value: String!
+    magnitude: String
+  }
+
+  input ReadingInput{
+    name: String!
+    type: String!
+    value: String!
+    magnitude: String
+  }
+
+  type InsertOutput{
+    n: Int
+    nModified: Int
+    ok: Int
   }
 
   extend type Query {
@@ -13,6 +33,6 @@ export default gql`
   }
 
   extend type Mutation {
-    createReading(timestamp: Int!, value: String!): Reading!
+    createReading(deviceId:String!, timestamp: Int!, values: [ReadingInput!]!): Reading!
   }
 `;

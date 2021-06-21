@@ -4,7 +4,7 @@ const bodyParser = require( 'body-parser');
 const helmet = require( 'helmet');
 const cors = require( 'cors');
 
-import { MQTTController } from './controllers'
+import {MQTTController} from './controllers'
 import {  HealthRouter } from './routes';
 const {PORT} = process.env;
 
@@ -23,6 +23,7 @@ app.use(HealthRouter);
 
 if(PORT) app.listen(PORT, ()=>{
   console.log(`App listening on http://localhost:${PORT}/`)
-  MQTTController.subscribe('distanciaVirtual/#')
-    .catch(err=>console.log(err))
+  MQTTController.connect();
+
+
 });

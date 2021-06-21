@@ -15,6 +15,7 @@ async function processMessage(message: IMessage){
   switch(action){
 
     case 'reading':      
+      const type = _getReadingType(topic);
       await BackendService.createReading(deviceId,value.timestamp,value.values)
         .catch(err=>console.log(err))
       break;
@@ -46,6 +47,11 @@ function _getAction(topic:string):string{
 
 function _getDeviceId(topic:string):string{
   return topic.split('/')[1];
+}
+
+function _getReadingType(topic:string):string{
+  const topicArray = topic.split('/')
+  return topicArray[topicArray.length-1];
 }
 
 export default controller;

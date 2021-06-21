@@ -8,14 +8,17 @@ export default {
     },
   },
   Mutation: {
-    createReading: async (parent, { deviceId, timestamp, values }, { models: { deviceModel } }, info) => {
-      const response = await deviceModel.findOneAndUpdate({id:deviceId},{ $push: {readings: {timestamp,values} }})     
-      return response.readings.find(reading=>reading.timestamp === timestamp);
+    createReading: async (parent, { deviceId, reading }, { models: { deviceModel } }, info) => {
+      const response = await deviceModel.findOneAndUpdate({id:deviceId},{ $push: {readings: reading }})     
+      return response.readings.find(reading=>reading.timestamp === reading.timestamp);
     },
   },
   Reading: {
-    id:         reading=> reading._id,
-    timestamp:  reading => reading.timestamp,
-    values:     reading => reading.values,
+    id:        reading => reading._id,
+    timestamp: reading => reading.timestamp,
+    name:      reading => reading.name,
+    type:      reading => reading.type,
+    value:     reading => reading.value,
+    magnitude: reading => reading.magnitude,
   },
 };

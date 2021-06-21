@@ -52,8 +52,6 @@ function createReading(deviceId:string, timestamp:number, values:[IReadingValue]
     }
   `
 
-  console.log(query)
-
   return _makeGraphqlRequest(query);
 }
 

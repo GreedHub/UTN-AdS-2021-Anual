@@ -4,10 +4,6 @@ export default gql`
   type Reading {
     id:ID!
     timestamp: Int!
-    values: [ReadingValue!]!
-  }
-
-  type ReadingValue{
     name: String!
     type: String!
     value: String!
@@ -15,6 +11,7 @@ export default gql`
   }
 
   input ReadingInput{
+    timestamp: Int!
     name: String!
     type: String!
     value: String!
@@ -33,6 +30,6 @@ export default gql`
   }
 
   extend type Mutation {
-    createReading(deviceId:String!, timestamp: Int!, values: [ReadingInput!]!): Reading!
+    createReading(deviceId:String!, reading: ReadingInput!): Reading!
   }
 `;

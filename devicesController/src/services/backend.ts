@@ -1,5 +1,5 @@
 import { request, gql } from 'graphql-request'
-import { IReadingValue } from '../types';
+import { IDeviceReading } from '../types';
 
 const services = {
   createDevice,
@@ -10,7 +10,7 @@ function createDevice(id:string, name:string){
 
   const query = gql`
     mutation{ 
-      createDevice(id:${id},name:${name}){
+      createDevice(id:"${id}",name:"${name}"){
         id,
         name
       }
@@ -20,36 +20,27 @@ function createDevice(id:string, name:string){
 
 }
 
-function createReading(deviceId:string, timestamp:number, values:[IReadingValue]){
+function createReading(deviceId:string, reading:IDeviceReading){
 
   const query = gql`
-    mutation{
-      createReading(
-        deviceId:"${deviceId}",
-        timestamp:${timestamp},
-        values:[
-          {
-            name:"testTemp",
-            type:"temperature",
-            value:"20",
-            magnitude:"C"
-          },
-          {
-            name:"doorOpen",
-            type:"bool",
-            value:"false"
-          }
-        ]
-      ){
-        timestamp,
-        values{
-          name,
-          type,
-          value,
-          magnitude
-        }
+  mutation{
+    createReading(
+      deviceId:"${deviceId}",
+      reading:{
+        timestamp:${reading.timestamp},
+        name:"${reading.name}",
+        type:"${reading.type}",
+        value:"${reading.value}",
+        magnitude:"${reading.magnitude}"
       }
+    ){
+      timestamp,
+      name,
+      type,
+      value,
+      magnitude
     }
+  }
   `
 
   return _makeGraphqlRequest(query);

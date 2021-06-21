@@ -74,8 +74,8 @@ function connect(){
   })
    
   client.on('message', function (topic, message) {
-    const value = JSON.parse(message.toString());
-    MessageController.processMessage({topic,value});
+    const content = JSON.parse(message.toString());
+    MessageController.processMessage({topic,content});
   
   })
 }

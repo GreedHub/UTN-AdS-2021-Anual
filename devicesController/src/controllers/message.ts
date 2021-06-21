@@ -7,7 +7,7 @@ const controller = {
 
 async function processMessage(message: IMessage){
 
-  const {topic, value} = message ;
+  const {topic, content} = message ;
 
   const action = _getAction(topic);
   const deviceId = _getDeviceId(topic);
@@ -16,12 +16,12 @@ async function processMessage(message: IMessage){
 
     case 'reading':      
       const type = _getReadingType(topic);
-      await BackendService.createReading(deviceId,value.timestamp,value.values)
+      await BackendService.createReading(deviceId,{...content, type})
         .catch(err=>console.log(err))
       break;
 
     case 'register':
-      await BackendService.createDevice(deviceId,value.name)
+      await BackendService.createDevice(deviceId,content.name)
         .catch(err=>console.log(err))
       break;
     

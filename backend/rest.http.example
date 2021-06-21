@@ -59,28 +59,19 @@ Content-Type: application/json
 
 mutation{
   createReading(
-    deviceId:"2aseq3we",
-    timestamp:123456,
-    values:[
-      {
-        name:"testTemp",
-        type:"temperature",
-        value:"20",
-        magnitude:"C"
-      },
-      {
-        name:"doorOpen",
-        type:"bool",
-        value:"false",
-      }
-    ]
-    ){
-      timestamp,
-      values{
-        name,
-        type,
-        value,
-        magnitude
-      }
+    deviceId:"2aseqwe",
+    reading:{
+      timestamp:123456,
+      name:"testTemp",
+      type:"temperature",
+      value:"20",
+      magnitude:"C"
+    }
+  ){
+    timestamp,
+    name,
+    type,
+    value,
+    magnitude
   }
 }

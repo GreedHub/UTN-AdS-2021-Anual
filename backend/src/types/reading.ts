@@ -18,12 +18,6 @@ export default gql`
     magnitude: String
   }
 
-  type InsertOutput{
-    n: Int
-    nModified: Int
-    ok: Int
-  }
-
   extend type Query {
     reading(id: ID!): Reading!
     readings: [Reading!]!

@@ -4,7 +4,9 @@ const bodyParser = require( 'body-parser');
 const helmet = require( 'helmet');
 const cors = require( 'cors');
 
-import { LoginRouter, HealthRouter } from './routes';
+import { MQTTController } from './controllers'
+import {  HealthRouter } from './routes';
+const {PORT} = process.env;
 
 const originsEnv:string = process.env.CORS_ENABLED_ORIGINS || '';
 const origins:string[] = originsEnv.split(",") || [];
@@ -17,7 +19,10 @@ app.use(cors({
     origin: origins,
     credentials: true,
   }));
-app.use(LoginRouter);
 app.use(HealthRouter);
 
-if(process.env.PORT) app.listen(process.env.PORT);
+if(PORT) app.listen(PORT, ()=>{
+  console.log(`App listening on http://localhost:${PORT}/`)
+  MQTTController.subscribe('distanciaVirtual/#')
+    .catch(err=>console.log(err))
+});

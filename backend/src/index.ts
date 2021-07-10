@@ -23,41 +23,36 @@ const { PORT,MONGO_URL } = process.env;
 
 async function startServer(){
 
-  mongoose.connection.once('open',()=>{
-    console.log('Connected to MongoDB');
-  })
- 
-  await mongoose.connect(MONGO_URL, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-    useFindAndModify: false,
-    useCreateIndex: true
-  });
+  try{
+    
+    await MongoDBDriver.connect(MONGO_URL);
 
+    const app = express();
+    app.use(bodyParser.json());
+    app.use(bodyParser.urlencoded({extended: true}));
+    app.use(helmet());
+    app.use(cors({
+        origin: origins,
+        credentials: true,
+      }));
+    app.use(LoginRouter);
+    app.use(HealthRouter);
 
-  const app = express();
-  app.use(bodyParser.json());
-  app.use(bodyParser.urlencoded({extended: true}));
-  app.use(helmet());
-  app.use(cors({
-      origin: origins,
-      credentials: true,
-    }));
-  app.use(LoginRouter);
-  app.use(HealthRouter);
+    const server = new ApolloServer({  
+      typeDefs,
+      resolvers,
+      context: {
+        models
+      }
+    });
+    
+    server.applyMiddleware({app});
 
-  const server = new ApolloServer({  
-    typeDefs,
-    resolvers,
-    context: {
-      models
-    }
-  });
-  
-  server.applyMiddleware({app});
+    if(PORT) app.listen(PORT,()=>console.log(`App started on port ${PORT}`));
 
-  if(PORT) app.listen(PORT,()=>console.log(`App started on port ${PORT}`));
+  }catch(err){
+    console.error(err)
+  }
 }
 
 startServer();
-

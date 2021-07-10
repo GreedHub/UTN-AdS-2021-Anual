@@ -4,19 +4,24 @@ const MongoDBDriver = {
   connect,
 }
 
-async function connect(url){
-  let mongodb = await mongoose.createConnection(url, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-    useFindAndModify: false,
-    useCreateIndex: true
-  });
+async function connect(url:string){
 
-  mongoose.connection.once('open',()=>{
-    console.log('Connected to MongoDB');
-  })
+  try{  
 
-  return mongodb;
+    mongoose.connection.once('open',()=>{
+      console.log('Connected to MongoDB');
+    })
+    
+    await mongoose.connect(url, {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+      useFindAndModify: false,
+      useCreateIndex: true
+    });
+
+  } catch(err) {
+    throw new Error(err)
+  }
 }
 
 export default MongoDBDriver;

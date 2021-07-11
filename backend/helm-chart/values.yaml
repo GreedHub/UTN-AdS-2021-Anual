@@ -7,7 +7,15 @@ replicaCount: 1
 name: "utn-ads-tpi-b"
 exposedPort: "5000"
 host: "api.distanciavirtual.com.ar"
+
+#ENV VARS
 corsEnabledSites: "distanciavirtual.com.ar"
+mongoUrl: ""
+password:
+  algorythm:  "sha512"
+  keylen:     "64"
+  iterations: "100000"
+  saltlen:    "32"
    
 image:
   name: "ghcr.io/greedhub/utn-ads-2021-backend:latest"

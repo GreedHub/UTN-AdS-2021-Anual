@@ -50,8 +50,18 @@ spec:
           value: {{ .Values.name}}
         - name: "PORT"
           value: {{ .Values.exposedPort | quote}}
-        - name: "CORS_ENABLED_SITES"
-          value: {{ .Values.corsEnabledSites}}
+        - name: "CORS_ENABLED_ORIGINS"
+          value: {{ .Values.corsEnabledOrigins}}
+        - name: "MONGO_URL"
+        value: "{{ .Values.mongoUrl}}"
+        - name: "PASSWORD_ALGORYTHM"
+        value: {{ .Values.password.algorythm}}
+        - name: "PASSWORD_KEYLEN"
+        value: {{ .Values.password.keylen}}
+        - name: "PASSWORD_ITERATIONS"
+        value: {{ .Values.password.iterations}}
+        - name: "PASSWORD_SALTLEN"
+        value: {{ .Values.password.saltlen}}
         - name: NODE_NAME
           valueFrom:
             fieldRef:

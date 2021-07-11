@@ -36,6 +36,10 @@ const userSchema = new mongoose.Schema({
   salt:{
     type: String,
     required: true,
+  },
+  sessions:{
+    type: mongoose.Types.Array,
+    required:true,
   }
 });
 

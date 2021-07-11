@@ -30,15 +30,33 @@ export default {
     },
   },
   Mutation: {
-    createUser: async (parent, { id, name }, { models: { deviceModel }}, info) => {
-      let oid = mongoose.Types.ObjectId;
-      const post = await deviceModel.create({id, name, _id:new oid()});
-      return post;
+    createUser: async (parent, { firstName, lastName, username, password, email, tenantId }, { models: { userModel }}, info) => {
+      try{
+        let oid = mongoose.Types.ObjectId;
+        const { secret } = await hashPassword(password);
+        const { hash, salt } = secret;
+
+        const user = await userModel.create({
+          id:new oid(),
+          firstName,
+          lastName,
+          username,
+          password:hash,
+          email,
+          tenantId,
+          salt,
+          isEmailVerified:true, //TODO: add email verification
+          sessions:[],
+        });
+
+        return user;
+      }catch(error){
+        throw new Error(error);
+      }
     },
   },
-  Device: {
+  User: {
     id: (device) => device.id,
     name: (device) => device.name,
-    readings: (device) => device.readings,
   },
 };

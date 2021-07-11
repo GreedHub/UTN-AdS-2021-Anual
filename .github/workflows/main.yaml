@@ -110,6 +110,7 @@ jobs:
             cd ./backend/helm-chart && \
             helm upgrade -i --force utn-ads-2021-backend -f values.yaml \
             --set-string timestamp=$TIMESTAMP \
+            --set-string mongoUrl=$BACKEND_MONGO_URL \
             ./
   
   devices-controller:

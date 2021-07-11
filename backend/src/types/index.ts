@@ -1,5 +1,6 @@
 import deviceTypes from './device'
 import readingTypes from './reading'
+import userTypes from './user'
 import { gql } from 'apollo-server-express';
 
 const linkSchema = gql`
@@ -11,4 +12,4 @@ const linkSchema = gql`
   }
 `;
 
-export default [linkSchema, deviceTypes, readingTypes];
+export default [linkSchema, deviceTypes, readingTypes, userTypes];

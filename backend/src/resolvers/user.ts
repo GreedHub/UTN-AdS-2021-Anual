@@ -15,25 +15,26 @@ export default {
       return users;
     },
     login: async (parent, { username, password}, { models: { userModel } }, info) => {
-      try{
-        const user = await userModel.find({ username }).exec();
-        const { salt } = user;
-        const isPasswordCorrect = await verifyPassword(password,user.password,salt);
 
-        if(!isPasswordCorrect) throw new AuthenticationError('Invalid password');
+      const [user, userError] = await PromiseHandler(userModel.find({ username }).exec());
+      if(userError) throw new AuthenticationError("Invalid user");
 
-        //TODO: create and return token
-      return user;
-      }catch(error){
-        throw new Error(error);
-      }
+      const [isPasswordCorrect,passwordError] = await PromiseHandler(verifyPassword(password,user[0].password,user[0].salt));
+      if(passwordError) throw new AuthenticationError("Cannot validate password");
+
+      if(!isPasswordCorrect) throw new AuthenticationError('Invalid password');
+
+      //TODO: create and return token
+      return user[0];
+
     },
   },
   Mutation: {
     createUser: async (parent, { firstName, lastName, username, password, email, tenantId }, { models: { userModel }}, info) => {
       try{
         let oid = mongoose.Types.ObjectId;
-        const { secret } = await hashPassword(password);
+        const secret = await hashPassword(password);
+        console.log(secret)
         const { hash, salt } = secret;
 
         const user = await userModel.create({
@@ -56,7 +57,15 @@ export default {
     },
   },
   User: {
-    id: (device) => device.id,
-    name: (device) => device.name,
+    id:        (user) => user.id,
+    email:     (user) => user.email,
+    firstName: (user) => user.firstName,
+    lastName:  (user) => user.lastName,
+    username:  (user) => user.username,
+    tenantId:  (user) => user.tenantId,
+    sessions:  (user) => user.sessions,
+    salt:      ()     => "***",
+    password:  ()     => "***",
+    isEmailVerified:  (user) => user.isEmailVerified,
   },
 };

@@ -38,7 +38,7 @@ const userSchema = new mongoose.Schema({
     required: true,
   },
   sessions:{
-    type: mongoose.Types.Array,
+    type: mongoose.Schema.Types.Array,
     required:true,
   }
 });

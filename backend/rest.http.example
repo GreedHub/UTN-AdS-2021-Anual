@@ -75,3 +75,33 @@ mutation{
     magnitude
   }
 }
+
+###Create user
+POST http://localhost:5000/graphql HTTP/1.1
+X-Request-Type: GraphQL
+Content-Type: application/json
+
+mutation{ 
+  createUser(firstName:"Example", lastName:"Name", username:"myUser", password:"myPassword", email:"email@example.com", tenantId:"MyTenantId"){
+    firstName,
+    lastName,
+    username,
+    email,
+    tenantId,
+  }
+}
+
+### Login
+POST http://localhost:5000/graphql HTTP/1.1
+X-Request-Type: GraphQL
+Content-Type: application/json
+
+query{
+  login(username:"myUser", password:"myPassword"){
+    firstName,
+    lastName,
+    username,
+    email,
+    tenantId,
+  }
+}

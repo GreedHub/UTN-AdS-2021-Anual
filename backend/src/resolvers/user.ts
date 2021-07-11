@@ -16,6 +16,7 @@ export default {
     },
     login: async (parent, { username, password}, { models: { userModel } }, info) => {
 
+      //TODO: replace auth errors?
       const [user, userError] = await PromiseHandler(userModel.find({ username }).exec());
       if(userError) throw new AuthenticationError("Invalid user");
 
@@ -34,7 +35,6 @@ export default {
       try{
         let oid = mongoose.Types.ObjectId;
         const secret = await hashPassword(password);
-        console.log(secret)
         const { hash, salt } = secret;
 
         const user = await userModel.create({

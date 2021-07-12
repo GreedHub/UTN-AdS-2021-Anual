@@ -1,8 +1,12 @@
 import * as  jwt from 'jsonwebtoken'
+import { getAccessCerts, getRefreshCerts, PromiseHandler } from './';
 
 let secretOrPrivateKey: String;
 let secretOrPublicKey: String;
 let options: Object;
+
+
+
 
 const {
   ATOKEN_EXPIRETIME,
@@ -22,7 +26,11 @@ function signJwt(payload, signOptions, keys) {
   return jwt.sign(payload, keys.privateKey, jwtSignOptions);
 }
 
-export function generateAccessToken(username:string, id:string){
+export async function generateAccessToken(username:string, id:string){
+  const [certs,error]  = await PromiseHandler(getAccessCerts())
+  if(error) throw new Error(error);
+  console.log(certs)
+  
   const options = {
     algorithm: ATOKEN_ALGORYTHM, 
     keyid: '1', 
@@ -32,14 +40,17 @@ export function generateAccessToken(username:string, id:string){
   }
 
   const keys = {
-    key: ATOKEN_PRIVKEY,
-    passphrase: ATOKEN_PASS,
+    key: certs.priv,
   }
   
   return signJwt({username,id},options,keys);
 }
 
-export function generateRefreshToken(username:string, id:string){
+export async function generateRefreshToken(username:string, id:string){
+
+  const [certs,error]  = await PromiseHandler(getRefreshCerts())
+  if(error) throw new Error(error);
+
   const options = {
     algorithm: RTOKEN_ALGORYTHM, 
     keyid: '1', 
@@ -49,25 +60,28 @@ export function generateRefreshToken(username:string, id:string){
   }
 
   const keys = {
-    key: RTOKEN_PRIVKEY,
-    passphrase: RTOKEN_PASS,
+    key: certs.priv,
   }
 
   return signJwt({username,id},options,keys);
 }
 
-export function verifyAccessToken(token:string){
-  return _verifyToken(token, ATOKEN_PUBKEY);
+export async function verifyAccessToken(token:string){
+  const [certs,error]  = await PromiseHandler(getAccessCerts())
+  if(error) throw new Error(error);
+  return _verifyToken(token, ATOKEN_PUBKEY,certs);
 }
 
-export function verifyRefreshToken(token:string){
-  return _verifyToken(token, RTOKEN_PUBKEY);
+export async function verifyRefreshToken(token:string){
+  const [certs,error]  = await PromiseHandler(getRefreshCerts())
+  if(error) throw new Error(error);
+  return _verifyToken(token, RTOKEN_PUBKEY,certs);
 }
 
-function _verifyToken(token:string,publicKey:string){
+function _verifyToken(token:string,publicKey:string,certs:any){
 
   /* TODO: check how to validate with public key */
-  return jwt.verify(token,publicKey,(err, decoded)=>{
+  return jwt.verify(token,certs.pub,(err, decoded)=>{
   
       if(err){
           console.log(err);

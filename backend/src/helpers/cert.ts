@@ -8,16 +8,40 @@ const ACERT_PATH = './certs/access';
 const RCERT_PATH = './certs/refresh';
 
 export async function getAccessCerts(){
-  const [,error] = await PromiseHandler(_getCerts(ACERT_PATH));
-  if(error) throw new Error(error);
+  try{
+    let certs = await _getCerts(ACERT_PATH);
+
+    const needToRefresh:Boolean = await _isExpired(certs['3']);
+    if(!needToRefresh) return certs;
+  
+    await generateAccessCerts();
+
+    certs = await _getCerts(ACERT_PATH);
+    
+    return certs;
+   
+  }catch(error){
+    if(error) throw new Error(error);
+  }
 }
 
 export async function getRefreshCerts(){
-  const [,error] = await PromiseHandler(_getCerts(RCERT_PATH));
-  if(error) throw new Error(error);
+  try{
+    let certs = await _getCerts(RCERT_PATH);
+
+    const needToRefresh:Boolean = await _isExpired(certs['3']);
+    if(!needToRefresh)  return certs;
+  
+    await generateRefreshCerts();
+
+    return await _getCerts(RCERT_PATH);
+   
+  }catch(error){
+    if(error) throw new Error(error);
+  }
 }
 
-export async function generateAcessCerts(){
+export async function generateAccessCerts(){
   const [,error] = await PromiseHandler(_generateCerts(ACERT_PATH,"AccessCert"));
   if(error) throw new Error(error);
 }
@@ -50,9 +74,9 @@ async function _generateCerts(path:string = `./certs/`,name:string){
 async function _getCerts(path:string){
   try{
     return {
-      1: _getCert(`${path}/1`),
-      2: _getCert(`${path}/2`),
-      3: _getCert(`${path}/3`)
+      1: await _getCert(`${path}/1`),
+      2: await _getCert(`${path}/2`),
+      3: await _getCert(`${path}/3`)
     }
   }catch(error){
     throw new Error(error);
@@ -113,4 +137,8 @@ function _validateFilePath(path:string){
       if (!fs.existsSync(folderPath)) fs.mkdirSync(folderPath)
       return folderPath
   })
+}
+
+async function _isExpired(cert:any):Promise<Boolean>{
+  return false;
 }

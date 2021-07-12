@@ -13,7 +13,7 @@ import typeDefs from './types';
 import resolvers from './resolvers';
 import models from './models';
 import { LoginRouter, HealthRouter } from './routes';
-import { generateAcessCerts, generateRefreshCerts } from "./helpers";
+import { generateAccessToken } from "./helpers";
 
 const originsEnv:string = process.env.CORS_ENABLED_ORIGINS || '';
 const origins:string[] = originsEnv.split(",") || [];
@@ -25,8 +25,8 @@ const { PORT,MONGO_URL } = process.env;
 async function startServer(){
 
   try{
-    await generateAcessCerts();
     
+    await generateAccessToken("asd", "d")
     await MongoDBDriver.connect(MONGO_URL);
 
     const app = express();

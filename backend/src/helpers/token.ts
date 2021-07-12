@@ -1,24 +1,14 @@
 import * as  jwt from 'jsonwebtoken'
-import { getAccessCerts, getRefreshCerts, PromiseHandler } from './';
+import { PromiseHandler } from './';
+import { AccessCertController, RefreshCertController } from '../controllers'
 
-let secretOrPrivateKey: String;
-let secretOrPublicKey: String;
 let options: Object;
-
-
-
 
 const {
   ATOKEN_EXPIRETIME,
   ATOKEN_ALGORYTHM,
-  ATOKEN_PUBKEY,
-  ATOKEN_PRIVKEY,
-  ATOKEN_PASS,
   RTOKEN_EXPIRETIME,
   RTOKEN_ALGORYTHM,
-  RTOKEN_PUBKEY,
-  RTOKEN_PRIVKEY,
-  RTOKEN_PASS,
 } = process.env;
 
 function signJwt(payload, signOptions, keys) {
@@ -27,9 +17,9 @@ function signJwt(payload, signOptions, keys) {
 }
 
 export async function generateAccessToken(username:string, id:string){
-  const [certs,error]  = await PromiseHandler(getAccessCerts())
+  const certController = AccessCertController.getInstance();
+  const [certs,error]  = await PromiseHandler(certController.getCerts())
   if(error) throw new Error(error);
-  console.log(certs)
   
   const options = {
     algorithm: ATOKEN_ALGORYTHM, 
@@ -48,7 +38,8 @@ export async function generateAccessToken(username:string, id:string){
 
 export async function generateRefreshToken(username:string, id:string){
 
-  const [certs,error]  = await PromiseHandler(getRefreshCerts())
+  const certController = RefreshCertController.getInstance();
+  const [certs,error]  = await PromiseHandler(certController.getCerts())
   if(error) throw new Error(error);
 
   const options = {
@@ -67,15 +58,17 @@ export async function generateRefreshToken(username:string, id:string){
 }
 
 export async function verifyAccessToken(token:string){
-  const [certs,error]  = await PromiseHandler(getAccessCerts())
+  const certController = AccessCertController.getInstance();
+  const [certs,error]  = await PromiseHandler(certController.getCerts())
   if(error) throw new Error(error);
-  return _verifyToken(token, ATOKEN_PUBKEY,certs);
+  return _verifyToken(token, certs.pub, certs);
 }
 
 export async function verifyRefreshToken(token:string){
-  const [certs,error]  = await PromiseHandler(getRefreshCerts())
+  const certController = RefreshCertController.getInstance();
+  const [certs,error]  = await PromiseHandler(certController.getCerts())
   if(error) throw new Error(error);
-  return _verifyToken(token, RTOKEN_PUBKEY,certs);
+  return _verifyToken(token, certs.pub,certs);
 }
 
 function _verifyToken(token:string,publicKey:string,certs:any){

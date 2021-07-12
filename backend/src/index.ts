@@ -9,11 +9,11 @@ import * as mongoose from 'mongoose';
 
 import { MongoDBDriver } from './drivers';
 
-import typeDefs from './types';
+import typeDefs from './typeDefs';
 import resolvers from './resolvers';
 import models from './models';
-import { LoginRouter, HealthRouter } from './routes';
 import { generateAccessToken } from "./helpers";
+import { AccessCertController, RefreshCertController } from "./controllers";
 
 const originsEnv:string = process.env.CORS_ENABLED_ORIGINS || '';
 const origins:string[] = originsEnv.split(",") || [];
@@ -25,8 +25,10 @@ const { PORT,MONGO_URL } = process.env;
 async function startServer(){
 
   try{
+    let controller = RefreshCertController.getInstance();
+    let certs = await controller.getCerts();
+    certs = await controller.getCerts();
     
-    await generateAccessToken("asd", "d")
     await MongoDBDriver.connect(MONGO_URL);
 
     const app = express();
@@ -37,8 +39,6 @@ async function startServer(){
         origin: origins,
         credentials: true,
       }));
-    app.use(LoginRouter);
-    app.use(HealthRouter);
 
     const server = new ApolloServer({  
       typeDefs,

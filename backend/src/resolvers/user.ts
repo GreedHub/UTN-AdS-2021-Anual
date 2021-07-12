@@ -1,5 +1,5 @@
 import { AuthenticationError } from 'apollo-server-express';
-import { PromiseHandler, hashPassword, verifyPassword } from '../helpers';
+import { PromiseHandler, hashPassword, verifyPassword, generateRefreshToken } from '../helpers';
 import * as mongoose from 'mongoose';
 
 export default {
@@ -17,16 +17,18 @@ export default {
     login: async (parent, { username, password}, { models: { userModel } }, info) => {
 
       //TODO: replace auth errors?
-      const [user, userError] = await PromiseHandler(userModel.find({ username }).exec());
+      let [user, userError] = await PromiseHandler(userModel.find({ username }).exec());
+      user = user[0];
       if(userError) throw new AuthenticationError("Invalid user");
 
-      const [isPasswordCorrect,passwordError] = await PromiseHandler(verifyPassword(password,user[0].password,user[0].salt));
+      const [isPasswordCorrect,passwordError] = await PromiseHandler(verifyPassword(password,user.password,user.salt));
       if(passwordError) throw new AuthenticationError("Cannot validate password");
 
       if(!isPasswordCorrect) throw new AuthenticationError('Invalid password');
+      
+      const token = generateRefreshToken(username,user.id);
 
-      //TODO: create and return token
-      return user[0];
+      return {token};
 
     },
   },

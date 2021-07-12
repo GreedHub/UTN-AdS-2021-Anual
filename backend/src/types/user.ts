@@ -21,6 +21,7 @@ export default gql`
     creationDate: Int!
     lastTimeActive: Int!
     token: String!
+    valid: Boolean!
   }
 
   type LoginOutput{

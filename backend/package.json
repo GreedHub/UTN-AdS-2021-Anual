@@ -22,10 +22,13 @@
     "express-graphql": "^0.12.0",
     "graphql": "^15.5.0",
     "helmet": "^4.6.0",
+    "jsonwebtoken": "^8.5.1",
     "mocha": "^9.0.0",
     "mocha-steps": "^1.3.0",
     "mongoose": "^5.12.14",
     "mqtt": "^4.2.6",
+    "rimraf": "^3.0.2",
+    "selfsigned": "^1.10.11",
     "ts-node": "^10.0.0",
     "typescript": "^4.3.2"
   },

@@ -18,6 +18,13 @@ export default {
   Mutation: {
     createUser: async (parent, { firstName, lastName, username, password, email, tenantId }, { models: { userModel }}, info) => {
       try{
+
+        const matchUsername = await userModel.find({ username }).exec();
+        if(matchUsername.length > 0) throw new Error("Username already exists");
+        
+        const matchEmail = await userModel.find({ email }).exec();
+        if(matchEmail.length > 0) throw new Error("Email already exists");
+
         let oid = mongoose.Types.ObjectId;
         const secret = await hashPassword(password);
         const { hash, salt } = secret;

@@ -25,9 +25,6 @@ const { PORT,MONGO_URL } = process.env;
 async function startServer(){
 
   try{
-    let controller = RefreshCertController.getInstance();
-    let certs = await controller.getCerts();
-    certs = await controller.getCerts();
     
     await MongoDBDriver.connect(MONGO_URL);
 

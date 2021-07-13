@@ -1,32 +1,6 @@
 import { generateCerts, verifyCert, getCerts } from "../helpers";
 import { ICerts } from "../types";
 
-export class AccessCertController{
-  private static instance:CertController
-
-  static getInstance(){
-    if(AccessCertController.instance) 
-      return AccessCertController.instance;
-    
-    AccessCertController.instance = new CertController('./certs/access',"AccessCert")
-    return AccessCertController.instance;
-  }
-
-}
-
-export class RefreshCertController{
-  private static instance:CertController
-
-  static getInstance(){
-    if(RefreshCertController.instance) 
-      return RefreshCertController.instance;
-    
-      RefreshCertController.instance = new CertController('./certs/refresh',"RefreshCert")
-    return RefreshCertController.instance;
-  }
-  
-}
-
 class CertController{
 
   path:string;
@@ -62,5 +36,40 @@ class CertController{
   }
   
 }
+export class AccessCertController extends CertController{
+  private static instance:AccessCertController
+
+  private constructor(path:string,name:string){
+    super(path,name);
+  }
+
+  static getInstance(){
+    if(AccessCertController.instance) 
+      return AccessCertController.instance;
+    
+    AccessCertController.instance = new AccessCertController('./certs/access',"AccessCert")
+    return AccessCertController.instance;
+  }
+
+}
+
+export class RefreshCertController extends CertController{
+  private static instance:RefreshCertController
+
+  private constructor(path:string,name:string){
+    super(path,name);
+  }
+
+  static getInstance(){
+    if(RefreshCertController.instance) 
+      return RefreshCertController.instance;
+    
+      RefreshCertController.instance = new RefreshCertController('./certs/refresh',"RefreshCert")
+    return RefreshCertController.instance;
+  }
+  
+}
+
+
 
 

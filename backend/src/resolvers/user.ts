@@ -14,23 +14,6 @@ export default {
       if(error) throw new Error(error);
       return users;
     },
-    login: async (parent, { username, password}, { models: { userModel } }, info) => {
-
-      //TODO: replace auth errors?
-      let [user, userError] = await PromiseHandler(userModel.find({ username }).exec());
-      user = user[0];
-      if(userError) throw new AuthenticationError("Invalid user");
-
-      const [isPasswordCorrect,passwordError] = await PromiseHandler(verifyPassword(password,user.password,user.salt));
-      if(passwordError) throw new AuthenticationError("Cannot validate password");
-
-      if(!isPasswordCorrect) throw new AuthenticationError('Invalid password');
-      
-      const token = generateRefreshToken(username,user.id);
-
-      return {token};
-
-    },
   },
   Mutation: {
     createUser: async (parent, { firstName, lastName, username, password, email, tenantId }, { models: { userModel }}, info) => {

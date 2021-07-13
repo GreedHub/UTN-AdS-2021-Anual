@@ -98,10 +98,7 @@ Content-Type: application/json
 
 query{
   login(username:"myUser", password:"myPassword"){
-    firstName,
-    lastName,
-    username,
-    email,
-    tenantId,
+    token,
+    refreshToken
   }
 }

@@ -24,14 +24,9 @@ export default gql`
     valid: Boolean!
   }
 
-  type LoginOutput{
-    token: String!
-  }
-
   extend type Query {
     user(id: ID!): User!
     users: [User!]!
-    login(username: String!, password: String!): LoginOutput!
   }
 
   extend type Mutation {

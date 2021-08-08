@@ -54,7 +54,12 @@ jobs:
         run: mkdir -p $HOME/.kube && echo ${{ secrets.KUBECONFIG }} | base64 -d > $HOME/.kube/config 
       -
         name: 'Deploy with Helm'
-        run: cd ./frontend/helm-chart && helm upgrade -i --force utn-ads-2021-frontend -f values.yaml --set-string timestamp=$TIMESTAMP ./
+        run: |
+            cd ./frontend/helm-chart && \
+            export TIMESTAMP=$(date +%s) && \
+            helm upgrade -i --force utn-ads-2021-frontend -f values.yaml \
+            --set-string timestamp=$TIMESTAMP \
+            ./
       
 
       
@@ -108,9 +113,10 @@ jobs:
         name: 'Deploy with Helm'
         run: |
             cd ./backend/helm-chart && \
+            export TIMESTAMP=$(date +%s) && \
             helm upgrade -i --force utn-ads-2021-backend -f values.yaml \
             --set-string timestamp=$TIMESTAMP \
-            --set-string mongoUrl=$BACKEND_MONGO_URL \
+            --set-string mongoUrl=${{ secrets.BACKEND_MONGO_URL }} \
             ./
   
   devices-controller:
@@ -163,6 +169,7 @@ jobs:
         name: 'Deploy with Helm'
         run: |
             cd ./devicesController/helm-chart && \
+            export TIMESTAMP=$(date +%s) && \
             helm upgrade -i --force utn-ads-2021-devices -f values.yaml \
             --set-string mqtt.username=${{ secrets.MQTT_USER }} \
             --set-string mqtt.password=${{ secrets.MQTT_PASS }} \

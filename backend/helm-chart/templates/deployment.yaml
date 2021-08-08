@@ -51,17 +51,17 @@ spec:
         - name: "PORT"
           value: {{ .Values.exposedPort | quote}}
         - name: "CORS_ENABLED_ORIGINS"
-          value: {{ .Values.corsEnabledOrigins}}
+          value: {{ .Values.corsEnabledOrigins | quote}}
         - name: "MONGO_URL"
           value: {{ .Values.mongoUrl | quote}}
         - name: "PASSWORD_ALGORYTHM"
-          value: {{ .Values.password.algorythm}}
+          value: {{ .Values.password.algorythm | quote}}
         - name: "PASSWORD_KEYLEN"
-          value: {{ .Values.password.keylen}}
+          value: {{ .Values.password.keylen | quote}}
         - name: "PASSWORD_ITERATIONS"
-          value: {{ .Values.password.iterations}}
+          value: {{ .Values.password.iterations | quote}}
         - name: "PASSWORD_SALTLEN"
-          value: {{ .Values.password.saltlen}}
+          value: {{ .Values.password.saltlen | quote}}
         - name: NODE_NAME
           valueFrom:
             fieldRef:

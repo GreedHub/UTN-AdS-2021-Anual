@@ -24,7 +24,7 @@ spec:
         imagePullPolicy: Always
         livenessProbe:
           httpGet:
-            path: /health
+            path: /.well-known/apollo/server-health
             port: {{ .Values.exposedPort}}
             scheme: HTTP
           initialDelaySeconds: 10
@@ -32,7 +32,7 @@ spec:
           periodSeconds: 30
         readinessProbe:
           httpGet:
-            path: /health
+            path: /.well-known/apollo/server-health
             port: {{ .Values.exposedPort}}
             scheme: HTTP
           initialDelaySeconds: 10

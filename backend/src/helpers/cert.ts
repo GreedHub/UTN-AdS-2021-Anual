@@ -1,6 +1,6 @@
-import * as fs from 'fs'
-import * as rimraf from 'rimraf'
-import * as selfsigned from 'selfsigned'
+import fs from 'fs'
+import rimraf from 'rimraf'
+import selfsigned from 'selfsigned'
 import { ICert, ICerts } from '../types'
 
 const { writeFile, readFile, rename } = fs.promises

@@ -14,7 +14,7 @@ mqtt:
   clientKey: ""
    
 image:
-  name: "ghcr.io/greedhub/utn-ads-2021-devicesController:latest"
+  name: "ghcr.io/greedhub/utn-ads-2021-devices-controller:latest"
   pullSecret: github-registry-greedhub
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.

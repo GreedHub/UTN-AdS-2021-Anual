@@ -145,7 +145,7 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           push: true
-          tags: ghcr.io/greedhub/utn-ads-2021-devicesController:latest
+          tags: ghcr.io/greedhub/utn-ads-2021-devices-controller:latest
           context: ./backend
       -
         name: Image digest

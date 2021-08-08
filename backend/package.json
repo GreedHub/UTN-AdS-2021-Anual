@@ -10,6 +10,10 @@
     "start": "ts-node index.ts",
     "prod": "node index.js"
   },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/GreedHub/UTN-AdS-2021-Anual"
+  },
   "author": "GravityL",
   "license": "ISC",
   "dependencies": {

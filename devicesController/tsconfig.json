@@ -1,6 +1,7 @@
 {
     "compilerOptions": {
-        "outDir": "build"
+        "outDir": "build",
+        "esModuleInterop": true,
     },
     "include": ["./src/*"],
     "exclude": ["node_modules"]

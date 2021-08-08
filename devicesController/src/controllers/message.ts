@@ -51,7 +51,7 @@ function _getDeviceId(topic:string):string{
 
 function _getReadingType(topic:string):string{
   const topicArray = topic.split('/')
-  return topicArray[topicArray.length-1];
+  return topicArray.pop();
 }
 
 export default controller;

@@ -1,5 +1,5 @@
 import { AuthenticationError } from 'apollo-server-express';
-import * as mongoose from 'mongoose';
+import mongoose from 'mongoose';
 
 export default {
   Query: {

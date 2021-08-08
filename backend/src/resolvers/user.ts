@@ -1,6 +1,6 @@
 import { AuthenticationError } from 'apollo-server-express';
 import { PromiseHandler, hashPassword, verifyPassword, generateRefreshToken } from '../helpers';
-import * as mongoose from 'mongoose';
+import mongoose from 'mongoose';
 
 export default {
   Query: {

@@ -1,4 +1,4 @@
-import * as mqtt from 'mqtt';
+import mqtt from 'mqtt';
 import { MessageController } from '.';
 const {
   MQTT_USER,

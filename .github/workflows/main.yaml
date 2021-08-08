@@ -109,6 +109,61 @@ jobs:
         run: |
             cd ./backend/helm-chart && \
             helm upgrade -i --force utn-ads-2021-backend -f values.yaml \
+            --set-string timestamp=$TIMESTAMP \
+            --set-string mongoUrl=$BACKEND_MONGO_URL \
+            ./
+  
+  devices-controller:
+    runs-on: self-hosted
+    steps:
+      -
+        name: Checkout
+        uses: actions/checkout@v2
+      -
+        name: Set up QEMU
+        uses: docker/setup-qemu-action@v1
+      - 
+        name: setup docker context for buildx
+        id: buildx-context
+        run: |
+          docker context create builders-d
+      - 
+        name: setup docker buildx
+        uses: docker/setup-buildx-action@v1
+        with:
+          endpoint: builders-d
+      -
+        name: Login to GitHub Packages Docker Registry
+        uses: docker/login-action@v1
+        with:
+          registry: ghcr.io
+          username: ${{ github.repository_owner }}
+          password: ${{ secrets.CR_PAT }} 
+      -
+        name: Build and push
+        id: docker_build
+        uses: docker/build-push-action@v2
+        with:
+          push: true
+          tags: ghcr.io/greedhub/utn-ads-2021-backend:latest
+          context: ./backend
+      -
+        name: Image digest
+        run: echo ${{ steps.docker_build.outputs.digest }}
+      - 
+        name: Install Helm
+        uses: azure/setup-helm@v1
+        id: install
+        with:
+          version: 3.1.3
+      - 
+        name: 'Apply Kubeconfig'
+        run: mkdir -p $HOME/.kube && echo ${{ secrets.KUBECONFIG }} | base64 -d > $HOME/.kube/config 
+      -
+        name: 'Deploy with Helm'
+        run: |
+            cd ./devicesController/helm-chart && \
+            helm upgrade -i --force utn-ads-2021-devices -f values.yaml \
             --set-string mqtt.username=${{ secrets.MQTT_USER }} \
             --set-string mqtt.password=${{ secrets.MQTT_PASS }} \
             --set-string mqtt.caCert=${{ secrets.MQTT_CA }} \

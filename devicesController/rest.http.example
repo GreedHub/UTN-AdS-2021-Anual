@@ -1,0 +1,19 @@
+### GET Health
+GET http://localhost:5000/health
+
+### TOPICS
+
+# Register
+project/deviceSN/register
+{
+  "name":"testDevice"
+}
+
+# Send Reading
+project/deviceSN/reading/temperature
+{
+  "timestamp":1234567,
+  "name":"testTemp",
+  "value":"20",
+  "magnitude":"C"
+}

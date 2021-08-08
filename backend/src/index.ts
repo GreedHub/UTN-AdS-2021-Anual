@@ -1,19 +1,16 @@
 require('dotenv').config({ path: './.env' })
 import { ApolloServer } from "apollo-server-express";
 
-import * as express from 'express';
-import * as bodyParser from 'body-parser';
-import * as helmet from 'helmet';
-import * as cors from 'cors';
-import * as mongoose from 'mongoose';
+import express from 'express';
+import {json,urlencoded} from 'body-parser';
+import helmet from 'helmet';
+import cors from 'cors';
 
 import { MongoDBDriver } from './drivers';
 
 import typeDefs from './typeDefs';
 import resolvers from './resolvers';
 import models from './models';
-import { generateAccessToken } from "./helpers";
-import { AccessCertController, RefreshCertController } from "./controllers";
 
 const originsEnv:string = process.env.CORS_ENABLED_ORIGINS || '';
 const origins:string[] = originsEnv.split(",") || [];
@@ -29,8 +26,8 @@ async function startServer(){
     await MongoDBDriver.connect(MONGO_URL);
 
     const app = express();
-    app.use(bodyParser.json());
-    app.use(bodyParser.urlencoded({extended: true}));
+    app.use(json());
+    app.use(urlencoded({extended: true}));
     app.use(helmet());
     app.use(cors({
         origin: origins,

@@ -6,12 +6,15 @@ replicaCount: 1
 
 name: "utn-ads-tpi-d"
 exposedPort: "5000"
+backendUrl: "https://api.distanciavirtual.com.ar/graphql"
 mqtt:
   username: ""
   password: ""
   caCert: ""
   clientCert: ""
   clientKey: ""
+  topicsSubscription: "distanciaVirtual/+/reading/#,distanciaVirtual/+/register"
+  brokerURl: "mqtt://broker.distanciavirtual.com.ar"
    
 image:
   name: "ghcr.io/greedhub/utn-ads-2021-devices-controller:latest"

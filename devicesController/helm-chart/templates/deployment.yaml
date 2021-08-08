@@ -50,8 +50,10 @@ spec:
           value: {{ .Values.name}}
         - name: "PORT"
           value: {{ .Values.exposedPort | quote}}
-        - name: "CORS_ENABLED_SITES"
-          value: {{ .Values.corsEnabledSites}}
+        - name: "BACKEND_URL"
+          value: {{ .Values.backendUrl}}
+        - name: "MQTT_BROKER_URL"
+          value: {{ .Values.mqtt.brokerURl}}        
         - name: "MQTT_USER"
           value: {{ .Values.mqtt.username}}
         - name: "MQTT_PASS"
@@ -62,6 +64,8 @@ spec:
           value: {{ .Values.mqtt.clientCert}}
         - name: "MQTT_CLIENT_KEY"
           value: {{ .Values.mqtt.clientKey}}
+        - name: "MQTT_TOPICS_SUBSCRIPTION"
+          value: {{ .Values.mqtt.topicsSubscription}}
         - name: NODE_NAME
           valueFrom:
             fieldRef:

@@ -1,4 +1,5 @@
 import { useHistory } from "react-router-dom";
+import './logout.scss';
 
 export default function Logout(){
   const history = useHistory();

@@ -38,10 +38,9 @@
       color:color('primary-lighter');
     }
 
-    input[type="submit"]:hover,
-    span>button:hover{
-      cursor: pointer;
-      background-color: lighten($color: color('primary-light'), $amount: 3) ;
+    input[type="submit"],
+    span>button{
+      @extend %button-primary,
     }
 
     

@@ -1,6 +1,7 @@
 @use "sass:map";
 
-$palette: (white: #FFFFFF,
+$palette: (
+  white: #FFFFFF,
   primary-dark:#38324E,
   primary: #413B61,
   primary-light:#736C95,
@@ -8,14 +9,29 @@ $palette: (white: #FFFFFF,
   accent:#EB4887,
 );
 
+$radius: 10px;
+
+@function color($colorName) {
+  @return map-get($map: $palette, $key: $colorName)
+}
+
 %flexBoxCentered {
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
-$radius: 10px;
-
-@function color($colorName) {
-  @return map-get($map: $palette, $key: $colorName)
+%button-primary{
+  border: none;
+  border-radius: $radius;
+  background-color: color('accent');
+  color: white;
 }
+
+%button-primary:hover{
+  cursor: pointer;
+  background-color: lighten($color: color('accent'), $amount: 5) ;
+}
+
+
+

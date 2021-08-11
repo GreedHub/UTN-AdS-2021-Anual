@@ -1,0 +1,6 @@
+@import '../../globals.module.scss';
+
+button{
+    @extend %button-primary;
+    padding: 1em;
+}

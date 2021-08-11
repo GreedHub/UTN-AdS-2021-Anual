@@ -1,0 +1,13 @@
+@import '../../globals.module.scss';
+
+.Home{
+    display: grid;
+    grid-template-columns: minmax(100px,300px) 1fr;
+    grid-template-rows: 1fr;
+    grid-template-areas: "Panel Content";
+    padding: 2em 1em;
+    box-sizing: border-box;
+    
+  height: 100vh; /* Fallback for browsers that do not support Custom Properties */
+  height: calc(var(--vh, 1vh) * 100);
+} 

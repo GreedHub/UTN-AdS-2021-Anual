@@ -1,0 +1,20 @@
+@import '../../globals.module.scss';
+
+.UserPanel{
+    background-color: color('primary') ;
+    color: color('primary-lighter');
+    grid-area: UserPanel;
+    min-height: 300px;
+    border-radius: $radius;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: stretch;
+    padding: 1em;
+    box-sizing: border-box;
+
+    &__title,
+    &__welcome{
+        text-align: center;
+    }
+}

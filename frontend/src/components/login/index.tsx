@@ -29,7 +29,10 @@ export default function Login(){
     console.log(form)
     if(!form.status.isValid) return;
     const [data,err] = await PromiseHandler(userService.login(form.username.value,form.password.value));
-    if(err) console.error(err);
+    if(err) {
+      console.error(err);
+      return;
+    }
     sessionStorage.setItem('AUTH_ACCESS_TOKEN', data.login.token);
     sessionStorage.setItem('AUTH_REFRESH_TOKEN', data.login.refreshToken);
     resetForm();

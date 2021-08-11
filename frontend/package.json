@@ -36,7 +36,7 @@
     "workbox-routing": "^5.1.4",
     "workbox-strategies": "^5.1.4",
     "workbox-streams": "^5.1.4",
-    "node-sass":"^4.14.1"
+    "node-sass": "^4.14.1"
   },
   "scripts": {
     "start": "react-scripts start",

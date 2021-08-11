@@ -1,11 +1,27 @@
-@import '../../globals.scss';
+@import '../../globals.module.scss';
 
 .Login{
-
   background-color: color('primary-dark');
+  box-sizing: border-box;
+  width: 100vw;
+  height: 100vh; /* Fallback for browsers that do not support Custom Properties */
+  height: calc(var(--vh, 1vh) * 100);
+  display: grid;
+  grid-template-columns: 1fr minmax(200px, 600px) 1fr;
+  grid-template-rows: 1fr 1fr 1fr;
+  grid-template-areas: "blank blank blank"
+                       "blank2 form blank3"
+                       "blank4 blank4 blank4";
   form{
+    grid-area: form;
     background-color: color('primary');
-  
+    min-height: 80vh;
   }
+
+
+  @media screen and (max-width:800px) {
+    grid-template-columns: 1fr minmax(200px, 6fr) 1fr;
+  }
+
 }
 

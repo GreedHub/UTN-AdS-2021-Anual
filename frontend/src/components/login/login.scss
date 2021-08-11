@@ -24,20 +24,14 @@
     align-items: stretch;
     padding: 5em;
 
-    h1{
-      text-align: center;
-      color: color('primary-lighter');
-      padding: 0px;
-      font-size: 2.5em;
-    }
-
     input{
       background-color: color('primary-light');
       border:none;
-      border-radius: 5px 0px 0px 5px;
+      border-radius: 5px;
       padding: 1em;
       font-size: 1em;
       color: color('primary-lighter');
+      outline: none;
     }
 
     input::placeholder{
@@ -58,7 +52,7 @@
       justify-content: stretch;
       input{
         width: 100%;
-        outline: none;
+        border-radius: 5px 0px 0px 5px;
       }
       button{
         align-self: stretch;
@@ -75,6 +69,12 @@
 
   @media screen and (max-width:800px) {
     grid-template-columns: 1fr minmax(200px, 6fr) 1fr;
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr;
+    grid-template-areas: "form";
+    form{
+      padding: 2em;
+    }
   }
 
 }

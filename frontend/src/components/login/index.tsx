@@ -22,7 +22,7 @@ export default function Login(){
 
   const [form,resetForm] = useForm(FORM);
   const [showPassword,setShowPassword] = useState(false);
-  
+
   let history = useHistory();
   const onSubmit = async (e:FormEvent)=>{
     e.preventDefault();
@@ -47,7 +47,7 @@ export default function Login(){
         <span className="Login__password-input">
           <input placeholder="Contraseña" type={showPassword ? "text" : "password"} name="password" {...form.password.bind}/>
           <button onClick={()=>setShowPassword(!showPassword)}>
-            { showPassword ? <VisibilityIcon/> : <VisibilityOffIcon/> }
+            { showPassword ?  <VisibilityOffIcon/> : <VisibilityIcon/> }
           </button>
         </span>
         <input type="submit" value="Iniciar Sesión"/>

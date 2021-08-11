@@ -1,3 +1,10 @@
 export const api = {
-  url: `https://api.distanciavirtual.com.ar/graphql`,
+  url:getApiHost(),
+}
+
+function getApiHost(){
+  const url = window.location.hostname;
+  return url.includes('localhost') 
+    ? 'http://localhost:5000/graphql'
+    : `https://api.distanciavirtual.com.ar/graphql`
 }

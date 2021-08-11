@@ -1,0 +1,21 @@
+@use "sass:map";
+
+$palette: (white: #FFFFFF,
+  primary-dark:#38324E,
+  primary: #413B61,
+  primary-light:#736C95,
+  primary-lighter:#B4B0C9,
+  accent:#EB4887,
+);
+
+%flexBoxCentered {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+$radius: 5px;
+
+@function color($colorName) {
+  @return map-get($map: $palette, $key: $colorName)
+}

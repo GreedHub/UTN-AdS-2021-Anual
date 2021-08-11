@@ -1,21 +1,21 @@
 import React from 'react';
 import './App.css';
-import { PromiseHandler } from './helpers';
-import { userService } from './services';
-
+import Login from './components/login';
+import PrivateRoute from './helperComponents/privateRoute';
+import { Router, Route, Switch, Redirect } from 'react-router-dom';
+import { history } from './helpers';
+import Home from './components/home';
 
 function App() {
-
-  const onClick = async ()=>{
-   const [data,err] =  await PromiseHandler(userService.login("ljguerci","Soad2011"));
-   if(err) throw new Error(err);
-   console.log(data);
-  }
-
-
   return (
     <div className="App">
-      <button onClick={onClick}>Test</button>
+       <Router history={history}>
+          <Switch>
+            <PrivateRoute exact path="/" authenticationPath="/login" component={Home} />
+            <Route path="/login" component={Login} />
+            <Redirect from="*" to="/" />
+          </Switch>
+      </Router>
     </div>
   );
 }

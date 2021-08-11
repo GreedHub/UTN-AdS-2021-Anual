@@ -23,7 +23,6 @@ export default class GraphQLDriver{
   }
 
   async request(query:string,variables?:{}):Promise<any>{
-    console.log(this)
     const [data,err] = await PromiseHandler(this.client.request(query, variables));
     if(err) throw new Error(err);
     return data;

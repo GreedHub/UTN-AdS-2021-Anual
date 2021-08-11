@@ -20,16 +20,22 @@ uint8_t temprature_sens_read();
 #define IOT_SUBSCRIBE_GET_STATUS_TOPIC "distanciaVirtual/TEMP_SENSOR/get_status"
 #define IOT_SUBSCRIBE_ENABLE_TOPIC     "distanciaVirtual/TEMP_SENSOR/enabled"
 
+unsigned long seconds = 1000L;
+unsigned long minutes = seconds * 60;
+unsigned long hours = minutes * 60; 
+
 WiFiClientSecure net = WiFiClientSecure();
 MQTTClient client = MQTTClient(256);
 uint8_t temprature_sens_read();
 bool isEnabled = true;
+unsigned long lastSendTime = 0;
 
 void connect()
 {
   WiFi.mode(WIFI_STA);
   WiFi.begin(WIFI_SSID, WIFI_PASSWORD);
 
+  Serial.println();
   Serial.print("Connecting to Wi-Fi");
 
   while (WiFi.status() != WL_CONNECTED){
@@ -50,7 +56,7 @@ void connect()
 
   Serial.print("Connecting to IoT Broker");
 
-  while (!client.connect(THINGNAME)) {
+  while (!client.connect(THINGNAME,IOT_USERNAME,IOT_PASSWORD)) {
     Serial.print(".");
     delay(100);
   }
@@ -70,9 +76,8 @@ void connect()
 
 void publishMessage()
 {
-
+  lastSendTime = millis();
   StaticJsonDocument<200> doc;
-  doc["timestamp"] = millis();
   doc["value"] = (temprature_sens_read() - 32) / 1.8;
   doc["magnitude"] = "C";
   doc["name"] = "main_temp";
@@ -102,7 +107,6 @@ void messageHandler(String &topic, String &payload) {
 
   if(strcmp(_topic,(char*)IOT_SUBSCRIBE_GET_STATUS_TOPIC) == 0){
     StaticJsonDocument<200> doc;
-    doc["timestamp"] = millis();
     doc["value"] = isEnabled;
     doc["name"] = "deviceStatus";
 
@@ -114,13 +118,14 @@ void messageHandler(String &topic, String &payload) {
 
 }
 
+
 void setup() {
   Serial.begin(9600);
   connect();
 }
 
 void loop() {
-  if(isEnabled)
+  if(isEnabled && millis()-lastSendTime > 1*minutes)
     publishMessage();
   client.loop();
   delay(1000);

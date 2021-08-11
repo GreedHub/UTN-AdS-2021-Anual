@@ -9,7 +9,7 @@ exposedPort: "5000"
 host: "api.distanciavirtual.com.ar"
 
 #ENV VARS
-corsEnabledOrigins: "distanciavirtual.com.ar"
+corsEnabledOrigins: "https://distanciavirtual.com.ar"
 mongoUrl: ""
 password:
   algorythm:  "sha512"

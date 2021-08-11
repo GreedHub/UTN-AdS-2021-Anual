@@ -27,7 +27,7 @@ function createReading(deviceId:string, reading:IDeviceReading){
     createReading(
       deviceId:"${deviceId}",
       reading:{
-        timestamp:${Date.now()},
+        timestamp:"${Date.now()}",
         name:"${reading.name}",
         type:"${reading.type}",
         value:"${reading.value}",

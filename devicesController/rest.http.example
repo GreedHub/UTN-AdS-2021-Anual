@@ -12,7 +12,7 @@ project/deviceSN/register
 # Send Reading
 project/deviceSN/reading/temperature
 {
-  "timestamp":1234567,
+  "timestamp":"1234567",
   "name":"testTemp",
   "value":"20",
   "magnitude":"C"

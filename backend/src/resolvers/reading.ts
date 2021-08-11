@@ -10,7 +10,7 @@ export default {
   Mutation: {
     createReading: async (parent, { deviceId, reading }, { models: { deviceModel } }, info) => {
       const response = await deviceModel.findOneAndUpdate({id:deviceId},{ $push: {readings: reading }})     
-      return response.readings.find(reading=>reading.timestamp === reading.timestamp);
+      return response.readings.find(_reading=>_reading.timestamp === reading.timestamp);
     },
   },
   Reading: {

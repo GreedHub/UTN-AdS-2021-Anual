@@ -3,5 +3,4 @@ export interface IDeviceReading{
   type: string
   value: string
   magnitude: string
-  timestamp: number
 }

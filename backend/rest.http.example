@@ -61,7 +61,7 @@ mutation{
   createReading(
     deviceId:"2aseqwe",
     reading:{
-      timestamp:123456,
+      timestamp:"123456",
       name:"testTemp",
       type:"temperature",
       value:"20",

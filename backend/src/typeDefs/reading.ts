@@ -3,7 +3,7 @@ import { gql } from 'apollo-server-express';
 export default gql`
   type Reading {
     id:ID!
-    timestamp: Int!
+    timestamp: String!
     name: String!
     type: String!
     value: String!
@@ -11,7 +11,7 @@ export default gql`
   }
 
   input ReadingInput{
-    timestamp: Int!
+    timestamp: String!
     name: String!
     type: String!
     value: String!

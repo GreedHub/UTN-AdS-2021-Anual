@@ -21,8 +21,8 @@ export default function Login(){
   }
 
   const [form,resetForm] = useForm(FORM);
-  const [showPassword,setShowPassword] = useState(true);
-
+  const [showPassword,setShowPassword] = useState(false);
+  
   let history = useHistory();
   const onSubmit = async (e:FormEvent)=>{
     e.preventDefault();
@@ -41,15 +41,16 @@ export default function Login(){
 
   return(
     <div className="Login">
+ 
       <form onSubmit={onSubmit}>
-        <input type="text" name="username" {...form.username.bind}/>
-        <input type={showPassword ? "text" : "password"} name="password" {...form.password.bind}/>
-        <div>
-          <input type="submit" value="Iniciar Sesión"/>
+        <input placeholder="Usuario" type="text" name="username" {...form.username.bind}/>
+        <span className="Login__password-input">
+          <input placeholder="Contraseña" type={showPassword ? "text" : "password"} name="password" {...form.password.bind}/>
           <button onClick={()=>setShowPassword(!showPassword)}>
             { showPassword ? <VisibilityIcon/> : <VisibilityOffIcon/> }
           </button>
-        </div>
+        </span>
+        <input type="submit" value="Iniciar Sesión"/>
       </form>
     </div>
   );

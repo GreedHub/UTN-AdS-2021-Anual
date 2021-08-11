@@ -14,7 +14,7 @@ $palette: (white: #FFFFFF,
   align-items: center;
 }
 
-$radius: 5px;
+$radius: 10px;
 
 @function color($colorName) {
   @return map-get($map: $palette, $key: $colorName)

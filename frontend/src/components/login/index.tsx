@@ -45,7 +45,11 @@ export default function Login(){
         <input placeholder="Usuario" type="text" name="username" {...form.username.bind}/>
         <div className="Login__password_input">
           <input placeholder="Contraseña" type={showPassword ? "text" : "password"} name="password" {...form.password.bind}/>
-          <button onClick={()=>setShowPassword(!showPassword)}>
+          <button 
+            className="Login__password_input" 
+            type="button" 
+            onClick={()=>setShowPassword(!showPassword)}
+          >
             { showPassword ? <VisibilityOffIcon/> : <VisibilityIcon/> }
           </button>
         </div>

@@ -16,6 +16,16 @@ password:
   keylen:     "64"
   iterations: "100000"
   saltlen:    "32"
+
+refresh_token:
+  algorythm:  "RS512"
+  exptime:    "30d"
+  secret:     "MySecretRefPassword"
+
+access_token:
+  algorythm:  "RS512"
+  exptime:    "15m"
+  secret:     "MySecretAccPassword"
    
 image:
   name: "ghcr.io/greedhub/utn-ads-2021-backend:latest"

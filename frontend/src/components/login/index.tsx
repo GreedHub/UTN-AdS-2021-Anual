@@ -26,7 +26,6 @@ export default function Login(){
   let history = useHistory();
   const onSubmit = async (e:FormEvent)=>{
     e.preventDefault();
-    console.log(form)
     if(!form.status.isValid) return;
     const [data,err] = await PromiseHandler(userService.login(form.username.value,form.password.value));
     if(err) {

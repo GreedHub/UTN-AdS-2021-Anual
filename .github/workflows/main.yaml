@@ -60,9 +60,7 @@ jobs:
             helm upgrade -i --force utn-ads-2021-frontend -f values.yaml \
             --set-string timestamp=$TIMESTAMP \
             ./
-      
-
-      
+         
   backend:
     runs-on: self-hosted
     steps:
@@ -117,6 +115,8 @@ jobs:
             helm upgrade -i --force utn-ads-2021-backend -f values.yaml \
             --set-string timestamp=$TIMESTAMP \
             --set-string mongoUrl=${{ secrets.BACKEND_MONGO_URL }} \
+            --set-string access_token.secret=${{ secrets.BACKEND_ATOKEN_SECRET }} \
+            --set-string refresh_token.secret=${{ secrets.BACKEND_RTOKEN_SECRET }} \
             ./
   
   devices-controller:

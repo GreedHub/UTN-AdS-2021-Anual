@@ -20,7 +20,7 @@ export default gql`
 
   extend type Query {
     reading(id: ID!): Reading!
-    readings: [Reading!]!
+    readings(deviceId:String!,sensorName:String): [Reading!]!
   }
 
   extend type Mutation {

@@ -39,11 +39,9 @@
     }
 
     input[type="submit"],
-    span>button{
+    &__password_input{
       @extend %button-primary,
     }
-
-    
 
     span{
       display: flex;

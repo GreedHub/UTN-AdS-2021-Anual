@@ -43,12 +43,12 @@ export default function Login(){
  
       <form onSubmit={onSubmit}>
         <input placeholder="Usuario" type="text" name="username" {...form.username.bind}/>
-        <span className="Login__password-input">
+        <div className="Login__password_input">
           <input placeholder="Contraseña" type={showPassword ? "text" : "password"} name="password" {...form.password.bind}/>
           <button onClick={()=>setShowPassword(!showPassword)}>
-            { showPassword ?  <VisibilityOffIcon/> : <VisibilityIcon/> }
+            { showPassword ? <VisibilityOffIcon/> : <VisibilityIcon/> }
           </button>
-        </span>
+        </div>
         <input type="submit" value="Iniciar Sesión"/>
       </form>
     </div>

@@ -2,15 +2,22 @@ import { AuthenticationError } from 'apollo-server-express';
 
 export default {
   Query: {
-    readings: async (parent, {deviceId,sensorName}, { models: { deviceModel } }, info) => {
-      const readings = await deviceModel.aggregate([
+    readings: async (parent, {deviceId,sensorName,filter}, { models: { deviceModel } }, info) => {
+      
+      let params:any[] = [
         { $match: { "id": deviceId } },
         { $unwind: "$readings"},
-        { $match: {"readings.name":sensorName} },
-        { $project: { "readings":1 } },
-        { $skip:  1 },
-        { $limit: 2 },
-      ]).exec();
+      ]
+
+      if(sensorName) params.push({ $match: {"readings.name":sensorName} });
+      if(filter){
+        params.push({ "$match" : {"$expr" : {"$gte" : [{"$toDouble" :"$readings.timestamp"} , filter.from]}}});
+        params.push({ "$match" : {"$expr" : {"$lte" : [{"$toDouble" :"$readings.timestamp"} , filter.to]}}});
+      }
+      params.push({ "$project": { "readings":1 } });
+      
+      
+      const readings = await deviceModel.aggregate(params).exec();
       return readings.map(reading=>reading.readings);
     },
   },

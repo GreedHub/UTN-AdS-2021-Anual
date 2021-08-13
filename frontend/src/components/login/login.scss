@@ -12,6 +12,11 @@
   grid-template-areas: "blank blank blank"
                        "blank2 form blank3"
                        "blank4 blank4 blank4";
+
+  h1{
+    color: white;
+    text-align: center;
+  }
   form{
     grid-area: form;
     background-color: color('primary');

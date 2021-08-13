@@ -11,7 +11,7 @@ export default function Login(){
 
   const FORM = {
     username:{
-        validation:/^[A-Za-z]{8,50}$/,
+        validation:/^[A-Za-z0-9]{8,50}$/,
         value: '',
     },
     password:{
@@ -42,6 +42,7 @@ export default function Login(){
     <div className="Login">
  
       <form onSubmit={onSubmit}>
+        <h1>Distancia Virtual</h1>
         <input placeholder="Usuario" type="text" name="username" {...form.username.bind}/>
         <div className="Login__password_input">
           <input placeholder="Contraseña" type={showPassword ? "text" : "password"} name="password" {...form.password.bind}/>

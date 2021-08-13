@@ -25,7 +25,6 @@ async function getDevices(){
 
   const [data,err] = await PromiseHandler(graphql.request(query))
   if(err) throw new Error(err);
-  graphql.addCredentials(data.login.token);
 
   return data;
 
@@ -33,18 +32,19 @@ async function getDevices(){
 
 async function getDeviceReadings(id:string,sensorName?:string,filter?:ReadingFilter){
     const query = gql`    
-        readings(deviceId:${id},sensorName:${sensorName},filter:${filter}){
-            timestamp,
-            name,
-            type,
-            value,
-            magnitude 
-        }  
+        query{
+          readings(deviceId:"${id}"){
+              timestamp,
+              name,
+              type,
+              value,
+              magnitude 
+          }  
+      } 
     `
 
   const [data,err] = await PromiseHandler(graphql.request(query))
   if(err) throw new Error(err);
-  graphql.addCredentials(data.login.token);
 
   return data;
 }

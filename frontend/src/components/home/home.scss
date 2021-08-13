@@ -5,7 +5,8 @@
     grid-template-columns: minmax(100px,300px) 1fr;
     grid-template-rows: 1fr;
     grid-template-areas: "Panel Content";
-    padding: 2em 1em;
+    gap: 1.5em;
+    padding: 2em 1.5em;
     box-sizing: border-box;
     
   height: 100vh; /* Fallback for browsers that do not support Custom Properties */

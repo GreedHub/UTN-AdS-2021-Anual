@@ -28,7 +28,6 @@ async function startServer(){
     const app = express();
     app.use(json());
     app.use(urlencoded({extended: true}));
-    app.use(helmet());
     app.use(cors({
         origin: origins,
         credentials: true,

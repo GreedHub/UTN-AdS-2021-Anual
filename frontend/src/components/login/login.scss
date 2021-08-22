@@ -12,6 +12,11 @@
   grid-template-areas: "blank blank blank"
                        "blank2 form blank3"
                        "blank4 blank4 blank4";
+
+  h1{
+    color: white;
+    text-align: center;
+  }
   form{
     grid-area: form;
     background-color: color('primary');
@@ -38,12 +43,11 @@
       color:color('primary-lighter');
     }
 
-    input[type="submit"],
-    &__password_input{
+    input[type="submit"]{
       @extend %button-primary,
     }
 
-    span{
+    div{
       display: flex;
       width: 100%;
       justify-content: stretch;
@@ -63,6 +67,9 @@
 
   }
 
+  &__password_visibility:hover{
+    background-color: lighten($color: color('primary-light'), $amount: 5) !important ;
+  }
 
   @media screen and (max-width:800px) {
     grid-template-columns: 1fr minmax(200px, 6fr) 1fr;

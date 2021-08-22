@@ -76,6 +76,21 @@ mutation{
   }
 }
 
+### Get reading
+POST http://localhost:5000/graphql HTTP/1.1
+X-Request-Type: GraphQL
+Content-Type: application/json
+
+query{
+    readings(deviceId:"TEMP_SENSOR",sensorName:"main_temp",filter:{from:1628716025510,to:1628716145526}){
+        timestamp,
+        name,
+        type,
+        value,
+        magnitude 
+    }  
+}
+
 ###Create user
 POST http://localhost:5000/graphql HTTP/1.1
 X-Request-Type: GraphQL

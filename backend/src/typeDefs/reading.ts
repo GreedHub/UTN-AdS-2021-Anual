@@ -18,9 +18,14 @@ export default gql`
     magnitude: String
   }
 
+  input ReadingFilter{
+    from: Float!
+    to: Float!
+  }
+
   extend type Query {
     reading(id: ID!): Reading!
-    readings: [Reading!]!
+    readings(deviceId:String!,sensorName:String,filter:ReadingFilter): [Reading!]!
   }
 
   extend type Mutation {

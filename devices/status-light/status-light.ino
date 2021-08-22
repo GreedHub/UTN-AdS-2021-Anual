@@ -70,7 +70,7 @@ void connect()
   Serial.println("IoT Broker Connected!");
 }
 
-void publishMessage()
+void publishStatus()
 {
   lastSendTime = millis();
   StaticJsonDocument<200> doc;
@@ -103,6 +103,7 @@ void messageHandler(String &topic, String &payload) {
     else if(strcmp(message,"alerted") == 0){ main_status = String("alerted"); Serial.println("Device status set to: alerted"); }
     else if(strcmp(message,"alarmed") == 0){ main_status = String("alarmed"); Serial.println("Device status set to: alarmed"); }
     else { main_status = String("enabled"); Serial.println("Device status unknown, awaiting status..."); }
+    publishStatus();
   }
 
   if(strcmp(_topic,(char*)IOT_SUBSCRIBE_GET_STATUS_TOPIC) == 0){
@@ -167,13 +168,12 @@ void setup() {
   pinMode(LED_RED, OUTPUT);
   onStatusWaiting();
   connect();
+  publishStatus();
 }
 
 void loop() {
-  if(!main_status.equals(String("disabled"))){
-    if(millis()-lastSendTime > 1*minutes) publishMessage();
-    showStatus();
-  }
+  if(!main_status.equals(String("disabled"))) showStatus();
+  
   client.loop();
   delay(1000);
 }

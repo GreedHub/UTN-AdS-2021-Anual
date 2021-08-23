@@ -11,4 +11,11 @@
     
   height: 100vh; /* Fallback for browsers that do not support Custom Properties */
   height: calc(var(--vh, 1vh) * 100);
+
+  @media screen and (max-width:1000px) {
+    grid-template-areas: "Panel"
+                         "Content";
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr;
+  }
 } 

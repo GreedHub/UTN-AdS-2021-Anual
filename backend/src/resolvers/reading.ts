@@ -10,9 +10,19 @@ export default {
       ]
 
       if(sensorName) params.push({ $match: {"readings.name":sensorName} });
-      if(filter){
+      if(filter?.from){
         params.push({ "$match" : {"$expr" : {"$gte" : [{"$toDouble" :"$readings.timestamp"} , filter.from]}}});
+      }
+      if(filter?.to){
         params.push({ "$match" : {"$expr" : {"$lte" : [{"$toDouble" :"$readings.timestamp"} , filter.to]}}});
+      }
+      if(filter?.last){        
+        params.push({ "$sort" : { "readings.timestamp" : -1 } });
+        params.push({ "$limit" : filter.last});
+      }
+      if(filter?.first){        
+        params.push({ "$sort" : { "readings.timestamp" : 1 } });
+        params.push({ "$limit" : filter.first});
       }
       params.push({ "$project": { "readings":1 } });
       

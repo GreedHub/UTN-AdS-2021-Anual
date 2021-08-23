@@ -1,0 +1,21 @@
+@import '../../globals.module.scss';
+
+.StatusGraph{
+  background-color: color('primary');
+  border-radius: $radius;
+  padding: .5em 1em;
+  box-sizing: border-box;
+  h3{
+    text-transform: capitalize;
+    color:color('primary-lighter');
+    .good{
+      color:green;
+    }
+    .alerted{
+      color:orange;
+    }
+    .alarmed{
+      color:red;
+    }
+  }
+}

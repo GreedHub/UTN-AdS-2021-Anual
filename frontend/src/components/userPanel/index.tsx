@@ -15,7 +15,7 @@ export default function UserPanel(){
 
   return(
     <div className="UserPanel">
-      <h3 className="UserPanel__title">UserPanel</h3>
+      <h3 className="UserPanel__title">Panel de usuario</h3>
       <p className="UserPanel__welcome">Bienvenido {username}</p>
       <Logout/>
     </div>

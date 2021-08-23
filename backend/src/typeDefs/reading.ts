@@ -19,8 +19,10 @@ export default gql`
   }
 
   input ReadingFilter{
-    from: Float!
-    to: Float!
+    from: Float
+    to: Float
+    last: Int
+    first: Int
   }
 
   extend type Query {

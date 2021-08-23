@@ -5,8 +5,10 @@ const graphql = GraphQLDriver.getInstance();
 const { gql } = graphql;
 
 type ReadingFilter = {
-    from: string
-    to: string
+    from?: string
+    to?: string
+    last?: number
+    first?: number
 }
 
 const device =  {
@@ -31,9 +33,10 @@ async function getDevices(){
 }
 
 async function getDeviceReadings(id:string,sensorName?:string,filter?:ReadingFilter){
+  let filterString = getFilterString(filter);
     const query = gql`    
         query{
-          readings(deviceId:"${id}"){
+          readings(deviceId:"${id}"${filterString}){
               timestamp,
               name,
               type,
@@ -47,6 +50,13 @@ async function getDeviceReadings(id:string,sensorName?:string,filter?:ReadingFil
   if(err) throw new Error(err);
 
   return data;
+}
+
+function getFilterString(filter:any){
+  if(!filter) return '';
+  
+  const filterArray:string[] = Object.keys(filter).map((key:any)=>`${key}:${filter[key]}`);
+  return `,filter:{${filterArray.join(',')}}`;
 }
 
 export default device;

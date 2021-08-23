@@ -7,7 +7,7 @@ import './content.scss';
 
 export default function Content(){
 
-    const [tempDevice,setTempDevice] = useState<{readings:Reading[],name:string}>({readings:[],name:""});
+    const [tempDevices,setTempDevices] = useState<{readings:Reading[],name:string}[]>([]);
 
     const loadDeviceData = async()=>{
         let [_tempDevice,err] = await PromiseHandler(deviceService.getDeviceReadings(
@@ -18,12 +18,27 @@ export default function Content(){
             return
         }
 
+        let [_tempDevice2,err2] = await PromiseHandler(deviceService.getDeviceReadings(
+            "TEMP_SENSOR"
+        ));
+        if(err2){
+            console.error(err2);
+            return
+        }
+
         _tempDevice.readings = _tempDevice.readings.map((reading:Reading)=>{
             reading["timestamp"] = time.toLocalTime(reading.timestamp);
             return reading;
         })
 
-        setTempDevice(_tempDevice);
+        _tempDevice2.readings = _tempDevice2.readings.map((reading:Reading)=>{
+            reading["timestamp"] = time.toLocalTime(reading.timestamp);
+            return reading;
+        })
+
+        setTempDevices([_tempDevice, _tempDevice2]);
+
+        console.log(tempDevices)
 
     }
 
@@ -33,7 +48,7 @@ export default function Content(){
 
     return(
         <div className="Content">
-            <TempGraph data={tempDevice.readings} deviceName={`${tempDevice.readings.pop()?.name}`}/>
+            {tempDevices.map(device=><TempGraph data={device.readings} deviceName={`${device.readings.pop()?.name}`}/>)}
         </div>
     )
 }

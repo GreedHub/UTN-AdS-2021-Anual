@@ -23,9 +23,12 @@ export default {
   },
   Mutation: {
     createReading: async (parent, { deviceId, reading }, { models: { deviceModel } }, info) => {
-      
-      const response = await deviceModel.findOneAndUpdate({id:deviceId},{ $push: {readings: reading }})     
-      return response.readings.find(_reading=>_reading.timestamp === reading.timestamp);
+      try{
+        await deviceModel.findOneAndUpdate({id:deviceId},{ $push: {readings: reading }})     
+        return reading;
+      }catch(err){
+        throw new Error(err)
+      }
     },
   },
   Reading: {

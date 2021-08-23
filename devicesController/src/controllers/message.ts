@@ -1,5 +1,6 @@
 import { BackendService } from "../services";
 import { IMessage } from "../types";
+import agregation from "../agregation";
 
 const controller = {
   processMessage,
@@ -18,6 +19,7 @@ async function processMessage(message: IMessage){
       const type = _getReadingType(topic);
       await BackendService.createReading(deviceId,{...content, type})
         .catch(err=>console.log(err))
+      await agregation(type,content,deviceId);
       break;
 
     case 'register':

@@ -34,11 +34,7 @@ function createReading(deviceId:string, reading:IDeviceReading){
         magnitude:"${reading.magnitude}"
       }
     ){
-      timestamp,
-      name,
-      type,
-      value,
-      magnitude
+      value
     }
   }
   `

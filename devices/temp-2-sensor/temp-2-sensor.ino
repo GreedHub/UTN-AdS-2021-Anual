@@ -17,13 +17,13 @@ uint8_t temprature_sens_read();
 #endif
 
 // The MQTT topics that this device should publish
-#define IOT_PUBLISH_KEEPALIVE_TOPIC   "distanciaVirtual/TEMP_SENSOR/keepalive"
-#define IOT_PUBLISH_TEMP_TOPIC   "distanciaVirtual/TEMP_SENSOR/reading/temp"
-#define IOT_PUBLISH_STATUS_TOPIC "distanciaVirtual/TEMP_SENSOR/reading/status"
+#define IOT_PUBLISH_KEEPALIVE_TOPIC   "distanciaVirtual/TEMP_SENSOR_2/keepalive"
+#define IOT_PUBLISH_TEMP_TOPIC   "distanciaVirtual/TEMP_SENSOR_2/reading/temp"
+#define IOT_PUBLISH_STATUS_TOPIC "distanciaVirtual/TEMP_SENSOR_2/reading/status"
 
 // The MQTT topics that this device should subscribe
-#define IOT_SUBSCRIBE_GET_STATUS_TOPIC "distanciaVirtual/TEMP_SENSOR/get_status"
-#define IOT_SUBSCRIBE_ENABLE_TOPIC     "distanciaVirtual/TEMP_SENSOR/enabled"
+#define IOT_SUBSCRIBE_GET_STATUS_TOPIC "distanciaVirtual/TEMP_SENSOR_2/get_status"
+#define IOT_SUBSCRIBE_ENABLE_TOPIC     "distanciaVirtual/TEMP_SENSOR_2/enabled"
 
 unsigned long seconds = 1000L;
 unsigned long minutes = seconds * 60;

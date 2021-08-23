@@ -16,9 +16,15 @@ let posibleStatus = [
 export default function StatusGraph(props:StatusGraphProps){
   const { status } = props;
 
+  const parseStatus = (status:string)=>{
+    return status.replace('good','Saludable')
+                 .replace('alerted','Alerta')
+                 .replace('alarmed','Crítico')
+  }
+
     return(
         <div className="StatusGraph">
-            <h3>System Status: <span className={status}>{status}</span></h3>
+            <h3>Estado del sistema: <span className={status}>{parseStatus(status)}</span></h3>
             
         </div>
     )

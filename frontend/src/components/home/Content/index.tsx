@@ -41,13 +41,13 @@ export default function Content(){
             reading["timestamp"] = time.toLocalTime(reading.timestamp);
             return reading;
         })
-        _tempDevice.name = "Temp Sensor"
+        _tempDevice.name = "Temperatura dispositivo 1"
 
         _tempDevice2.readings = _tempDevice2.readings.map((reading:Reading)=>{
             reading["timestamp"] = time.toLocalTime(reading.timestamp);
             return reading;
         })
-        _tempDevice2.name = "Temp Sensor 2"
+        _tempDevice2.name = "Temperatura dispositivo 2"
 
         setTempDevices([_tempDevice, _tempDevice2]);
         setSystemStatus(_statusLight.readings[0].value);
@@ -61,7 +61,7 @@ export default function Content(){
     return(
         <div className="Content">
             <StatusGraph status={systemStatus}></StatusGraph>
-            {tempDevices.map((device,index)=><TempGraph key={index} data={device.readings} deviceName={`${device.name} (${device.readings.pop()?.name})`}/>)}
+            {tempDevices.map((device,index)=><TempGraph key={index} data={device.readings} deviceName={`${device.name}`}/>)}
         </div>
     )
 }

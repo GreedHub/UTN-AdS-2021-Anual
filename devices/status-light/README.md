@@ -6,4 +6,4 @@ Device status:
 | Both blinking  |  Awaiting status  |
 | Green on  | Good  |
 | Red on  | Alerted  |
-| Red blinking  | Alarmed  |
+| Red blinking  | Alarmed  | 

@@ -8,6 +8,8 @@ on:
 jobs:
   frontend:
     runs-on: self-hosted
+    permissions:
+      packages: write
     steps:
       -
         name: Checkout
@@ -63,6 +65,8 @@ jobs:
          
   backend:
     runs-on: self-hosted
+    permissions:
+      packages: write
     steps:
       -
         name: Checkout
@@ -121,6 +125,8 @@ jobs:
   
   devices-controller:
     runs-on: self-hosted
+    permissions:
+      packages: write
     steps:
       -
         name: Checkout
